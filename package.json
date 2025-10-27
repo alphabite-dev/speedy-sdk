@@ -43,12 +43,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alphabite-org/speedy-sdk.git"
+    "url": "https://github.com/alphabite-dev/speedy-sdk.git"
   },
   "bugs": {
-    "url": "https://github.com/alphabite-org/speedy-sdk/issues"
+    "url": "https://github.com/alphabite-dev/speedy-sdk/issues"
   },
-  "homepage": "https://github.com/alphabite-org/speedy-sdk#readme",
+  "homepage": "https://github.com/alphabite-dev/speedy-sdk#readme",
   "dependencies": {
     "axios": "^1.6.2"
   },
