@@ -1,7 +1,7 @@
 {
   "name": "@alphabite/speedy-sdk",
   "version": "1.0.0",
-  "description": "Official TypeScript SDK for Speedy shipping API - the leading Bulgarian courier service",
+  "description": "Unofficial TypeScript SDK for Speedy shipping API",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
