@@ -1,0 +1,1370 @@
+{
+	"info": {
+		"_postman_id": "69076b2f-550f-45ac-8fc0-fe874e2dced3",
+		"name": "Speedy API examples v 1.3.0",
+		"description": "#### Guideline\n\nThis postman collection is created, based on the [examples](https://services.speedy.bg/api/api_examples.html) for [Speedy REST API](https://api.speedy.bg/web-api.html)\n\nPlease, set in the variables section of the collection, your `API_USERNAME` and `API_PASSWORD`, which must be provided by **Speedy team**, or by your contact person in **Speedy**. `API_BASEURL` is set as the starting URL for the Speedy API. For detailed information please visit the [information](https://api.speedy.bg/web-api.html#href-intro) about the API.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13658398"
+	},
+	"item": [
+		{
+			"name": "Create Shipment Request",
+			"item": [
+				{
+					"name": "1 - A shipment to an address",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\" : {{API_USERNAME}},\r\n  \"password\" : {{API_PASSWORD}},\r\n  \"language\" : \"EN\",\r\n  \"service\" : {\r\n    \"serviceId\" : 505,\r\n    \"additionalServices\" : {\r\n      \"cod\" : {\r\n        \"amount\" : 100.0,\r\n        \"processingType\" : \"CASH\"\r\n      },\r\n      \"declaredValue\" : {\r\n        \"amount\" : 100.0,\r\n        \"fragile\" : true,\r\n        \"ignoreIfNotApplicable\" : true\r\n      },\r\n      \"obpd\" : {\r\n        \"option\" : \"OPEN\",\r\n        \"returnShipmentServiceId\" : 505,\r\n        \"returnShipmentPayer\" : \"SENDER\"\r\n      }\r\n    },\r\n    \"saturdayDelivery\" : true,\r\n    \"autoAdjustPickupDate\" : true\r\n  },\r\n  \"content\" : {\r\n    \"parcelsCount\" : 3,\r\n    \"totalWeight\" : 0.6,\r\n    \"contents\" : \"MOBILE PHONE\",\r\n    \"package\" : \"BOX\"\r\n  },\r\n  \"payment\" : {\r\n    \"courierServicePayer\" : \"RECIPIENT\",\r\n    \"declaredValuePayer\" : \"RECIPIENT\"\r\n  },\r\n  \"sender\" : {\r\n    \"phone1\" : {\r\n      \"number\" : \"0888112233\"\r\n    },\r\n    \"contactName\" : \"IVAN PETROV\",\r\n    \"email\" : \"ivan@petrov.bg\"\r\n  },\r\n  \"recipient\" : {\r\n    \"phone1\" : {\r\n      \"number\" : \"0899445566\"\r\n    },\r\n    \"clientName\" : \"VASIL GEORGIEV\",\r\n    \"email\" : \"vasil@georgiev.bg\",\r\n    \"privatePerson\" : true,\r\n    \"address\" : {\r\n      \"countryId\" : 100,\r\n      \"siteId\" : 68134,\r\n      \"streetId\" : 3109,\r\n      \"streetNo\" : \"1A\",\r\n      \"complexId\" : 29,\r\n      \"blockNo\" : \"301\",\r\n      \"entranceNo\" : \"2\",\r\n      \"floorNo\" : \"3\",\r\n      \"apartmentNo\" : \"4\"\r\n    }\r\n  },\r\n  \"ref1\" : \"ORDER 123456\"\r\n} ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/shipment",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"shipment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 - A shipment to an ofice",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\" : {{API_USERNAME}},\r\n  \"password\" : {{API_PASSWORD}},\r\n  \"language\" : \"EN\",\r\n  \"service\" : {\r\n    \"serviceId\" : 505,\r\n    \"additionalServices\" : {\r\n      \"cod\" : {\r\n        \"amount\" : 100.0,\r\n        \"processingType\" : \"CASH\"\r\n      },\r\n      \"declaredValue\" : {\r\n        \"amount\" : 100.0,\r\n        \"fragile\" : true,\r\n        \"ignoreIfNotApplicable\" : true\r\n      },\r\n      \"obpd\" : {\r\n        \"option\" : \"OPEN\",\r\n        \"returnShipmentServiceId\" : 505,\r\n        \"returnShipmentPayer\" : \"SENDER\"\r\n      }\r\n    },\r\n    \"saturdayDelivery\" : true,\r\n    \"autoAdjustPickupDate\" : true\r\n  },\r\n  \"content\" : {\r\n    \"parcelsCount\" : 1,\r\n    \"totalWeight\" : 0.6,\r\n    \"contents\" : \"MOBILE PHONE\",\r\n    \"package\" : \"BOX\"\r\n  },\r\n  \"payment\" : {\r\n    \"courierServicePayer\" : \"RECIPIENT\",\r\n    \"declaredValuePayer\" : \"RECIPIENT\"\r\n  },\r\n  \"sender\" : {\r\n    \"phone1\" : {\r\n      \"number\" : \"0888112233\"\r\n    },\r\n    \"contactName\" : \"IVAN PETROV\",\r\n    \"email\" : \"ivan@petrov.bg\"\r\n  },\r\n  \"recipient\" : {\r\n    \"phone1\" : {\r\n      \"number\" : \"0899445566\"\r\n    },\r\n    \"clientName\" : \"VASIL GEORGIEV\",\r\n    \"email\" : \"vasil@georgiev.bg\",\r\n    \"privatePerson\" : true,\r\n    \"pickupOfficeId\" : 14\r\n  },\r\n  \"ref1\" : \"ORDER 123456\"\r\n} ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/shipment",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"shipment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 - A shipment from an office and Third Party Payer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\" : {{API_USERNAME}},\r\n  \"password\" : {{API_PASSWORD}},\r\n  \"language\": \"EN\",\r\n  \"service\": {\r\n    \"serviceId\": 505,\r\n    \"additionalServices\": {\r\n      \"cod\": {\r\n        \"amount\": 100,\r\n        \"processingType\": \"CASH\"\r\n      },\r\n      \"declaredValue\": {\r\n        \"amount\": 100,\r\n        \"fragile\": true,\r\n        \"ignoreIfNotApplicable\": true\r\n      },\r\n      \"obpd\": {\r\n        \"option\": \"OPEN\",\r\n        \"returnShipmentServiceId\": 505,\r\n        \"returnShipmentPayer\": \"THIRD_PARTY\"\r\n      }\r\n    },\r\n    \"saturdayDelivery\": true,\r\n    \"autoAdjustPickupDate\": true\r\n  },\r\n  \"content\": {\r\n    \"parcelsCount\": 1,\r\n    \"totalWeight\": 0.6,\r\n    \"contents\": \"MOBILE PHONE\",\r\n    \"package\": \"BOX\"\r\n  },\r\n  \"payment\": {\r\n    \"courierServicePayer\": \"THIRD_PARTY\",\r\n    \"declaredValuePayer\": \"THIRD_PARTY\",\r\n    \"thirdPartyClientId\": 123456789 /*!!!! MUST BE CHAGED !!!!!! - Third Party ClintID from Logged User Contract */\r\n  },\r\n  \"sender\": {\r\n    \"phone1\": {\r\n      \"number\": \"0888112233\"\r\n    },\r\n    \"clientName\": \"Company LTD\",\r\n    \"contactName\": \"IVAN PETROV\",\r\n    \"email\": \"ivan@petrov.bg\",\r\n    \"privatePerson\": false,\r\n    \"dropoffOfficeId\": 2\r\n  },\r\n  \"recipient\": {\r\n    \"phone1\": {\r\n      \"number\": \"0899445566\"\r\n    },\r\n    \"clientName\": \"VASIL GEORGIEV\",\r\n    \"email\": \"vasil@georgiev.bg\",\r\n    \"privatePerson\": true,\r\n    \"address\": {\r\n      \"countryId\": 100,\r\n      \"siteId\": 68134,\r\n      \"streetId\": 3109,\r\n      \"streetNo\": \"1A\",\r\n      \"complexId\": 29,\r\n      \"blockNo\": \"301\",\r\n      \"entranceNo\": \"2\",\r\n      \"floorNo\": \"3\",\r\n      \"apartmentNo\": \"4\"\r\n    }\r\n  },\r\n  \"ref1\": \"1234567890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/shipment",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"shipment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Print Request example",
+			"item": [
+				{
+					"name": "Print a waybill with one parcel",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"paperSize\": \"A6\",\r\n    \"parcels\": [\r\n        {\r\n            \"parcelId\": {\r\n                \"id\": \"299999990\"\r\n            }\r\n        }\r\n    ],\r\n    \"additionalWaybillSenderCopy\": \"NONE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/print",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"print"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Print a waybill with multiple parcels",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"paperSize\": \"A6\",\r\n        \"parcels\": [\r\n        {\r\n            \"parcel\":{\r\n                \"id\": \"299999990\"\r\n                }\r\n            \r\n        },\r\n        {\r\n            \"parcel\":{\r\n                \"id\": \"299999990024\"\r\n                }\r\n        },\r\n        {\r\n            \"parcel\":{\r\n                \"id\": \"299999990030\"\r\n             }\r\n        }\r\n    ],\r\n    \"additionalWaybillSenderCopy\": \"NONE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/print",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"print"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Contract Clients Request",
+			"item": [
+				{
+					"name": "Get Contract Clients",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/client/contract",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"client",
+								"contract"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Find Country Request",
+			"item": [
+				{
+					"name": "1 - Search by full country name",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"name\" : \"ROMANIA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/country/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"country",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 - Search by part of the country name",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"name\" : \"GER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/country/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"country",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 - Search by country isoAlpha2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"isoAlpha2\": \"GR\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/country/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"country",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Find State Request examples",
+			"item": [
+				{
+					"name": "Search by full state name",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\" : {{API_USERNAME}},\r\n  \"password\" : {{API_PASSWORD}},\r\n  \"language\" : \"EN\",\r\n  \"countryId\" : 840,\r\n  \"name\" : \"ALABAMA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/state",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"state"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by part of state name 2a",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\" : {{API_USERNAME}},\r\n  \"password\" : {{API_PASSWORD}},\r\n  \"language\" : \"EN\",\r\n  \"countryId\" : 840,\r\n  \"name\" : \"AR\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/state",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"state"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by part of state name 2b",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\" : {{API_USERNAME}},\r\n  \"password\" : {{API_PASSWORD}},\r\n  \"language\" : \"EN\",\r\n  \"countryId\" : 124,\r\n  \"name\" : \"N\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/state",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"state"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Find Office Request",
+			"item": [
+				{
+					"name": "1 - Find offices in a country",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"countryId\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/office/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"office",
+								""
+							]
+						},
+						"description": "Here `\"countryId\" : 100` is the id of Bulgaria"
+					},
+					"response": []
+				},
+				{
+					"name": "2 - Find offices in a site",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"siteId\" : 68134\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/office/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"office",
+								""
+							]
+						},
+						"description": "In the example: `\"siteId\" : 68134` is the id of the city Sofia"
+					},
+					"response": []
+				},
+				{
+					"name": "3 - Find office by country and part of the name",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"countryId\": 100,\r\n    \"name\": \"SOM\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/office/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"office",
+								""
+							]
+						},
+						"description": "The `'countryId'` is not mandatory."
+					},
+					"response": []
+				},
+				{
+					"name": "4 - Find office in a site by part of the name",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"siteId\": 68134,\r\n    \"name\": \"SOM\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/office/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"office",
+								""
+							]
+						},
+						"description": "The `'siteId'` is not mandatory"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Find Site Request",
+			"item": [
+				{
+					"name": "1 - Search by part of the site name",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"countryId\": 100,\r\n    \"name\": \"DOBR\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/site/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"site",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 - Search by exact site name",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"countryId\": 100,\r\n    \"name\": \"DOBRICH\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/site/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"site",
+								""
+							]
+						},
+						"description": "`\"countryId\": 100` is for country Bulgaria  \nReminder:  \nThe site names in BULGARIA are not unique"
+					},
+					"response": []
+				},
+				{
+					"name": "3 - Search site by name and post code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"countryId\": 100,\r\n    \"name\": \"DOBRICH\",\r\n    \"postCode\": 9300\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/site/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"site",
+								""
+							]
+						},
+						"description": "`\"countryId\": 100` is for country Bulgaria  \nReminder:  \nThe combination from the name and post code is unique."
+					},
+					"response": []
+				},
+				{
+					"name": "4 - Search by site post code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"countryId\": 100,\r\n    \"postCode\": \"1475\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/site/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"site",
+								""
+							]
+						},
+						"description": "`\"countryId\": 100` is for country Bulgaria  \nReminder:  \nThe post codes in Bulgaria are not unique."
+					},
+					"response": []
+				},
+				{
+					"name": "5 - Search by site name, type and region",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"countryId\": 100,\r\n    \"postCode\": \"1475\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/site/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"site",
+								""
+							]
+						},
+						"description": "`\"countryId\": 100` is for country Bulgaria  \nReminder:  \nThe combination from these three elements - `\"language\", \"countryId\"` and `\"postCode\"` is unique."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Find Complex Request",
+			"item": [
+				{
+					"name": "Search by part of the complex name",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"siteId\": 68134,\r\n    \"name\" : \"KRASN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/complex/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"complex",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Find Street Request examples",
+			"item": [
+				{
+					"name": "1 - Search street details by part of the name",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"siteId\": 68134,\r\n    \"name\" : \"USTA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/street/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"street",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 - Search street details by full street name",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"siteId\": 68134,\r\n    \"name\": \"VASIL LEVSKI\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/street/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"street",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 - Search street details by full name and type.",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"siteId\": 68134,\r\n    \"name\": \"VASIL LEVSKI\",\r\n    \"type\": \"bul.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/street/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"street",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Find POI Request examples",
+			"item": [
+				{
+					"name": "Search poi details by part of the name",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"siteId\": 68134,\r\n    \"name\": \"NATIONAL\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/location/poi/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"location",
+								"poi",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Destination Services Request",
+			"item": [
+				{
+					"name": "1 - The sender has clientId, the recipient is a private person",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"date\": \"2021-05-31\",\r\n    \"recipient\": {\r\n        \"privatePerson\": true,\r\n        \"addressLocation\": {\r\n            \"siteId\": 68134\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/services/destination",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"services",
+								"destination"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 - The sender has clientId, the recipient is a private person in another country",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"date\": \"2021-05-31\",\r\n    \"recipient\": {\r\n        \"privatePerson\": true,\r\n        \"addressLocation\": {\r\n            \"countryId\": 300,\r\n            \"postCode\": \"54248\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/services/destination",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"services",
+								"destination"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Calculation Request",
+			"item": [
+				{
+					"name": "1 - A calculation to an address",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"recipient\": {\r\n        \"privatePerson\": true,\r\n        \"addressLocation\": {\r\n            \"siteId\": 10135\r\n        }\r\n    },\r\n    \"service\": {\r\n        \"autoAdjustPickupDate\": true,\r\n        \"serviceIds\": [\r\n            505\r\n        ],\r\n        \"additionalServices\": {\r\n            \"cod\": {\r\n                \"amount\": 100.0,\r\n                \"processingType\": \"CASH\"\r\n            },\r\n            \"declaredValue\": {\r\n                \"amount\": 100.0,\r\n                \"fragile\": true,\r\n                \"ignoreIfNotApplicable\": true\r\n            },\r\n            \"obpd\": {\r\n                \"option\": \"OPEN\",\r\n                \"returnShipmentServiceId\": 505,\r\n                \"returnShipmentPayer\": \"SENDER\"\r\n            }\r\n        }\r\n    },\r\n    \"content\": {\r\n        \"parcelsCount\": 1,\r\n        \"totalWeight\": 0.6\r\n    },\r\n    \"payment\": {\r\n        \"courierServicePayer\": \"RECIPIENT\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/calculate/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"calculate",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 - A calculation to an office",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"recipient\": {\r\n        \"privatePerson\": true,\r\n        \"pickupOfficeId\": 77\r\n    },\r\n    \"service\": {\r\n        \"autoAdjustPickupDate\": true,\r\n        \"serviceIds\": [\r\n            505\r\n        ],\r\n        \"additionalServices\": {\r\n            \"cod\": {\r\n                \"amount\": 100.0,\r\n                \"processingType\": \"CASH\"\r\n            },\r\n            \"declaredValue\": {\r\n                \"amount\": 100.0,\r\n                \"fragile\": true,\r\n                \"ignoreIfNotApplicable\": true\r\n            },\r\n            \"obpd\": {\r\n                \"option\": \"OPEN\",\r\n                \"returnShipmentServiceId\": 505,\r\n                \"returnShipmentPayer\": \"SENDER\"\r\n            }\r\n        }\r\n    },\r\n    \"content\": {\r\n        \"parcelsCount\": 1,\r\n        \"totalWeight\": 0.6\r\n    },\r\n    \"payment\": {\r\n        \"courierServicePayer\": \"RECIPIENT\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/calculate/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"calculate",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Track Request",
+			"item": [
+				{
+					"name": "1 - Track a parcel",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"parcels\": [\r\n        {\r\n            \"id\": \"299999990\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/track/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"track",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2 - Track a parcel and return only last operation.",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"parcels\": [\r\n        {\r\n            \"id\": \"299999990\"\r\n        }\r\n    ],\r\n    \"lastOperationOnly\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/track/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"track",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 - Track more than one parcels with one request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"parcels\": [\r\n        {\r\n            \"id\": \"299999990\"\r\n        },\r\n        {\r\n            \"id\": \"299999991\"\r\n        },\r\n        {\r\n            \"id\": \"299999992\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/track/",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"track",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Defined address examples",
+			"item": [
+				{
+					"name": "1 - Defined address via ids",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"service\": {\r\n        \"serviceId\": 505,\r\n        \"additionalServices\": {\r\n            \"cod\": {\r\n                \"amount\": 100.0,\r\n                \"processingType\": \"CASH\"\r\n            },\r\n            \"declaredValue\": {\r\n                \"amount\": 100.0,\r\n                \"fragile\": true,\r\n                \"ignoreIfNotApplicable\": true\r\n            },\r\n            \"obpd\": {\r\n                \"option\": \"OPEN\",\r\n                \"returnShipmentServiceId\": 505,\r\n                \"returnShipmentPayer\": \"SENDER\"\r\n            }\r\n        },\r\n        \"saturdayDelivery\": true,\r\n        \"autoAdjustPickupDate\": true\r\n    },\r\n    \"content\": {\r\n        \"parcelsCount\": 1,\r\n        \"totalWeight\": 0.6,\r\n        \"contents\": \"MOBILE PHONE\",\r\n        \"package\": \"BOX\"\r\n    },\r\n    \"payment\": {\r\n        \"courierServicePayer\": \"RECIPIENT\",\r\n        \"declaredValuePayer\": \"RECIPIENT\"\r\n    },\r\n    \"sender\": {\r\n        \"phone1\": {\r\n            \"number\": \"0888112233\"\r\n        },\r\n        \"contactName\": \"IVAN PETROV\",\r\n        \"email\": \"ivan@petrov.bg\"\r\n    },\r\n    \"recipient\": {\r\n        \"phone1\": {\r\n            \"number\": \"0899445566\"\r\n        },\r\n        \"clientName\": \"VASIL GEORGIEV\",\r\n        \"email\": \"vasil@georgiev.bg\",\r\n        \"privatePerson\": true,\r\n        \"address\": {\r\n            \"countryId\": 100,\r\n            \"siteId\": 68134,\r\n            \"streetId\": 3109,\r\n            \"streetNo\": \"1A\",\r\n            \"complexId\": 29,\r\n            \"blockNo\": \"301\",\r\n            \"entranceNo\": \"2\",\r\n            \"floorNo\": \"3\",\r\n            \"apartmentNo\": \"4\"\r\n        }\r\n    },\r\n    \"ref1\": \"ORDER 123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/shipment",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"shipment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2a - An address, defined by exact match from 'siteType' and 'siteName' exact match from 'streetType' and 'streetName'",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"service\": {\r\n        \"serviceId\": 505,\r\n        \"additionalServices\": {\r\n            \"cod\": {\r\n                \"amount\": 100.0,\r\n                \"processingType\": \"CASH\"\r\n            },\r\n            \"declaredValue\": {\r\n                \"amount\": 100.0,\r\n                \"fragile\": true,\r\n                \"ignoreIfNotApplicable\": true\r\n            },\r\n            \"obpd\": {\r\n                \"option\": \"OPEN\",\r\n                \"returnShipmentServiceId\": 505,\r\n                \"returnShipmentPayer\": \"SENDER\"\r\n            }\r\n        },\r\n        \"saturdayDelivery\": true,\r\n        \"autoAdjustPickupDate\": true\r\n    },\r\n    \"content\": {\r\n        \"parcelsCount\": 1,\r\n        \"totalWeight\": 0.6,\r\n        \"contents\": \"MOBILE PHONE\",\r\n        \"package\": \"BOX\"\r\n    },\r\n    \"payment\": {\r\n        \"courierServicePayer\": \"RECIPIENT\",\r\n        \"declaredValuePayer\": \"RECIPIENT\"\r\n    },\r\n    \"sender\": {\r\n        \"phone1\": {\r\n            \"number\": \"0888112233\"\r\n        },\r\n        \"contactName\": \"IVAN PETROV\",\r\n        \"email\": \"ivan@petrov.bg\"\r\n    },\r\n    \"recipient\": {\r\n        \"phone1\": {\r\n            \"number\": \"0899445566\"\r\n        },\r\n        \"clientName\": \"VASIL GEORGIEV\",\r\n        \"email\": \"vasil@georgiev.bg\",\r\n        \"privatePerson\": true,\r\n        \"address\": {\r\n            \"countryId\": 100,\r\n            \"siteType\": \"gr.\",\r\n            \"siteName\": \"SOFIA\",\r\n            \"streetType\": \"ul.\",\r\n            \"streetName\": \"USTA GENCHO\",\r\n            \"streetNo\": \"1A\"\r\n        }\r\n    },\r\n    \"ref1\": \"ORDER 123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/shipment",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"shipment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2b - An address defined by exact match from 'siteType' and 'postCode', and exact match from 'streetType' and 'streetName'",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"service\": {\r\n        \"serviceId\": 505,\r\n        \"additionalServices\": {\r\n            \"cod\": {\r\n                \"amount\": 100.0,\r\n                \"processingType\": \"CASH\"\r\n            },\r\n            \"declaredValue\": {\r\n                \"amount\": 100.0,\r\n                \"fragile\": true,\r\n                \"ignoreIfNotApplicable\": true\r\n            },\r\n            \"obpd\": {\r\n                \"option\": \"OPEN\",\r\n                \"returnShipmentServiceId\": 505,\r\n                \"returnShipmentPayer\": \"SENDER\"\r\n            }\r\n        },\r\n        \"saturdayDelivery\": true,\r\n        \"autoAdjustPickupDate\": true\r\n    },\r\n    \"content\": {\r\n        \"parcelsCount\": 1,\r\n        \"totalWeight\": 0.6,\r\n        \"contents\": \"MOBILE PHONE\",\r\n        \"package\": \"BOX\"\r\n    },\r\n    \"payment\": {\r\n        \"courierServicePayer\": \"RECIPIENT\",\r\n        \"declaredValuePayer\": \"RECIPIENT\"\r\n    },\r\n    \"sender\": {\r\n        \"phone1\": {\r\n            \"number\": \"0888112233\"\r\n        },\r\n        \"contactName\": \"IVAN PETROV\",\r\n        \"email\": \"ivan@petrov.bg\"\r\n    },\r\n    \"recipient\": {\r\n        \"phone1\": {\r\n            \"number\": \"0899445566\"\r\n        },\r\n        \"clientName\": \"VASIL GEORGIEV\",\r\n        \"email\": \"vasil@georgiev.bg\",\r\n        \"privatePerson\": true,\r\n        \"address\": {\r\n            \"countryId\": 100,\r\n            \"siteName\": \"SOFIA\",\r\n            \"postCode\": \"1331\",\r\n            \"streetType\": \"ul.\",\r\n            \"streetName\": \"USTA GENCHO\",\r\n            \"streetNo\": \"1A\"\r\n        }\r\n    },\r\n    \"ref1\": \"ORDER 123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/shipment",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"shipment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3 - An address defined by ids of the site and the complex, and an exact match between 'streetType' and 'streetName'",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"service\": {\r\n        \"serviceId\": 505,\r\n        \"additionalServices\": {\r\n            \"cod\": {\r\n                \"amount\": 100.0,\r\n                \"processingType\": \"CASH\"\r\n            },\r\n            \"declaredValue\": {\r\n                \"amount\": 100.0,\r\n                \"fragile\": true,\r\n                \"ignoreIfNotApplicable\": true\r\n            },\r\n            \"obpd\": {\r\n                \"option\": \"OPEN\",\r\n                \"returnShipmentServiceId\": 505,\r\n                \"returnShipmentPayer\": \"SENDER\"\r\n            }\r\n        },\r\n        \"saturdayDelivery\": true,\r\n        \"autoAdjustPickupDate\": true\r\n    },\r\n    \"content\": {\r\n        \"parcelsCount\": 1,\r\n        \"totalWeight\": 0.6,\r\n        \"contents\": \"MOBILE PHONE\",\r\n        \"package\": \"BOX\"\r\n    },\r\n    \"payment\": {\r\n        \"courierServicePayer\": \"RECIPIENT\",\r\n        \"declaredValuePayer\": \"RECIPIENT\"\r\n    },\r\n    \"sender\": {\r\n        \"phone1\": {\r\n            \"number\": \"0888112233\"\r\n        },\r\n        \"contactName\": \"IVAN PETROV\",\r\n        \"email\": \"ivan@petrov.bg\"\r\n    },\r\n    \"recipient\": {\r\n        \"phone1\": {\r\n            \"number\": \"0899445566\"\r\n        },\r\n        \"clientName\": \"VASIL GEORGIEV\",\r\n        \"email\": \"vasil@georgiev.bg\",\r\n        \"privatePerson\": true,\r\n        \"address\": {\r\n            \"countryId\": 100,\r\n            \"siteId\": 68134,\r\n            \"complexId\": 29,\r\n            \"streetType\": \"ul.\",\r\n            \"streetName\": \"USTA GENCHO\",\r\n            \"streetNo\": \"1A\"\r\n        }\r\n    },\r\n    \"ref1\": \"ORDER 123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/shipment",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"shipment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4 - An address defined by exact match from 'complexType' and 'complexName' or/and exact match from 'streetType' and 'streetName'",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"service\": {\r\n        \"serviceId\": 505,\r\n        \"additionalServices\": {\r\n            \"cod\": {\r\n                \"amount\": 100.0,\r\n                \"processingType\": \"CASH\"\r\n            },\r\n            \"declaredValue\": {\r\n                \"amount\": 100.0,\r\n                \"fragile\": true,\r\n                \"ignoreIfNotApplicable\": true\r\n            },\r\n            \"obpd\": {\r\n                \"option\": \"OPEN\",\r\n                \"returnShipmentServiceId\": 505,\r\n                \"returnShipmentPayer\": \"SENDER\"\r\n            }\r\n        },\r\n        \"saturdayDelivery\": true,\r\n        \"autoAdjustPickupDate\": true\r\n    },\r\n    \"content\": {\r\n        \"parcelsCount\": 1,\r\n        \"totalWeight\": 0.6,\r\n        \"contents\": \"MOBILE PHONE\",\r\n        \"package\": \"BOX\"\r\n    },\r\n    \"payment\": {\r\n        \"courierServicePayer\": \"RECIPIENT\",\r\n        \"declaredValuePayer\": \"RECIPIENT\"\r\n    },\r\n    \"sender\": {\r\n        \"phone1\": {\r\n            \"number\": \"0888112233\"\r\n        },\r\n        \"contactName\": \"IVAN PETROV\",\r\n        \"email\": \"ivan@petrov.bg\"\r\n    },\r\n    \"recipient\": {\r\n        \"phone1\": {\r\n            \"number\": \"0899445566\"\r\n        },\r\n        \"clientName\": \"VASIL GEORGIEV\",\r\n        \"email\": \"vasil@georgiev.bg\",\r\n        \"privatePerson\": true,\r\n        \"address\": {\r\n            \"countryId\": 100,\r\n            \"siteId\": 68134,\r\n            \"complexType\": \"zhk\",\r\n            \"complexName\": \"KRASNA POLYANA 3\",\r\n            \"streetType\": \"ul.\",\r\n            \"streetName\": \"USTA GENCHO\",\r\n            \"streetNo\": \"1A\"\r\n        }\r\n    },\r\n    \"ref1\": \"ORDER 123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/shipment",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"shipment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5 - An address defined by 'siteId' and exact match from 'streetType' and 'streetName'",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"service\": {\r\n        \"serviceId\": 505,\r\n        \"additionalServices\": {\r\n            \"cod\": {\r\n                \"amount\": 100.0,\r\n                \"processingType\": \"CASH\"\r\n            },\r\n            \"declaredValue\": {\r\n                \"amount\": 100.0,\r\n                \"fragile\": true,\r\n                \"ignoreIfNotApplicable\": true\r\n            },\r\n            \"obpd\": {\r\n                \"option\": \"OPEN\",\r\n                \"returnShipmentServiceId\": 505,\r\n                \"returnShipmentPayer\": \"SENDER\"\r\n            }\r\n        },\r\n        \"saturdayDelivery\": true,\r\n        \"autoAdjustPickupDate\": true\r\n    },\r\n    \"content\": {\r\n        \"parcelsCount\": 1,\r\n        \"totalWeight\": 0.6,\r\n        \"contents\": \"MOBILE PHONE\",\r\n        \"package\": \"BOX\"\r\n    },\r\n    \"payment\": {\r\n        \"courierServicePayer\": \"RECIPIENT\",\r\n        \"declaredValuePayer\": \"RECIPIENT\"\r\n    },\r\n    \"sender\": {\r\n        \"phone1\": {\r\n            \"number\": \"0888112233\"\r\n        },\r\n        \"contactName\": \"IVAN PETROV\",\r\n        \"email\": \"ivan@petrov.bg\"\r\n    },\r\n    \"recipient\": {\r\n        \"phone1\": {\r\n            \"number\": \"0899445566\"\r\n        },\r\n        \"clientName\": \"VASIL GEORGIEV\",\r\n        \"email\": \"vasil@georgiev.bg\",\r\n        \"privatePerson\": true,\r\n        \"address\": {\r\n            \"countryId\": 100,\r\n            \"siteId\": 68134,\r\n            \"streetType\": \"ul.\",\r\n            \"streetName\": \"USTA GENCHO\",\r\n            \"streetNo\": \"1A\"\r\n        }\r\n    },\r\n    \"ref1\": \"ORDER 123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/shipment",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"shipment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6 - The address defined by 'poiId' and some additional info filled in the 'addressNote'",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"service\": {\r\n        \"serviceId\": 505,\r\n        \"additionalServices\": {\r\n            \"cod\": {\r\n                \"amount\": 100.0,\r\n                \"processingType\": \"CASH\"\r\n            },\r\n            \"declaredValue\": {\r\n                \"amount\": 100.0,\r\n                \"fragile\": true,\r\n                \"ignoreIfNotApplicable\": true\r\n            },\r\n            \"obpd\": {\r\n                \"option\": \"OPEN\",\r\n                \"returnShipmentServiceId\": 505,\r\n                \"returnShipmentPayer\": \"SENDER\"\r\n            }\r\n        },\r\n        \"saturdayDelivery\": true,\r\n        \"autoAdjustPickupDate\": true\r\n    },\r\n    \"content\": {\r\n        \"parcelsCount\": 1,\r\n        \"totalWeight\": 0.6,\r\n        \"contents\": \"MOBILE PHONE\",\r\n        \"package\": \"BOX\"\r\n    },\r\n    \"payment\": {\r\n        \"courierServicePayer\": \"RECIPIENT\",\r\n        \"declaredValuePayer\": \"RECIPIENT\"\r\n    },\r\n    \"sender\": {\r\n        \"phone1\": {\r\n            \"number\": \"0888112233\"\r\n        },\r\n        \"contactName\": \"IVAN PETROV\",\r\n        \"email\": \"ivan@petrov.bg\"\r\n    },\r\n    \"recipient\": {\r\n        \"phone1\": {\r\n            \"number\": \"0899445566\"\r\n        },\r\n        \"clientName\": \"VASIL GEORGIEV\",\r\n        \"email\": \"vasil@georgiev.bg\",\r\n        \"privatePerson\": true,\r\n        \"address\": {\r\n            \"countryId\": 100,\r\n            \"siteId\": 68134,\r\n            \"poiId\": 68134000483088,\r\n            \"addressNote\": \"2nd floor, office 201\"\r\n        }\r\n    },\r\n    \"ref1\": \"ORDER 123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/shipment",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"shipment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7a - The whole address is placed in the 'addressNote' field",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"service\": {\r\n        \"serviceId\": 505,\r\n        \"additionalServices\": {\r\n            \"cod\": {\r\n                \"amount\": 100.0,\r\n                \"processingType\": \"CASH\"\r\n            },\r\n            \"declaredValue\": {\r\n                \"amount\": 100.0,\r\n                \"fragile\": true,\r\n                \"ignoreIfNotApplicable\": true\r\n            },\r\n            \"obpd\": {\r\n                \"option\": \"OPEN\",\r\n                \"returnShipmentServiceId\": 505,\r\n                \"returnShipmentPayer\": \"SENDER\"\r\n            }\r\n        },\r\n        \"saturdayDelivery\": true,\r\n        \"autoAdjustPickupDate\": true\r\n    },\r\n    \"content\": {\r\n        \"parcelsCount\": 1,\r\n        \"totalWeight\": 0.6,\r\n        \"contents\": \"MOBILE PHONE\",\r\n        \"package\": \"BOX\"\r\n    },\r\n    \"payment\": {\r\n        \"courierServicePayer\": \"RECIPIENT\",\r\n        \"declaredValuePayer\": \"RECIPIENT\"\r\n    },\r\n    \"sender\": {\r\n        \"phone1\": {\r\n            \"number\": \"0888112233\"\r\n        },\r\n        \"contactName\": \"IVAN PETROV\",\r\n        \"email\": \"ivan@petrov.bg\"\r\n    },\r\n    \"recipient\": {\r\n        \"phone1\": {\r\n            \"number\": \"0899445566\"\r\n        },\r\n        \"clientName\": \"VASIL GEORGIEV\",\r\n        \"email\": \"vasil@georgiev.bg\",\r\n        \"privatePerson\": true,\r\n        \"address\": {\r\n            \"countryId\": 100,\r\n            \"siteId\": 68134,\r\n            \"addressNote\": \"ul. USTA GENCHO, No.1A, bl.301, ent.2, fl.3, ap.4\"\r\n        }\r\n    },\r\n    \"ref1\": \"ORDER 123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/shipment",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"shipment"
+							]
+						},
+						"description": "That kind of shipment will be not processed automatically and there are probabilities for mistakes and delay of the delivery."
+					},
+					"response": []
+				},
+				{
+					"name": "7b - The whole address is placed in the 'addressNote' field.",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"service\": {\r\n        \"serviceId\": 505,\r\n        \"additionalServices\": {\r\n            \"cod\": {\r\n                \"amount\": 100.0,\r\n                \"processingType\": \"CASH\"\r\n            },\r\n            \"declaredValue\": {\r\n                \"amount\": 100.0,\r\n                \"fragile\": true,\r\n                \"ignoreIfNotApplicable\": true\r\n            },\r\n            \"obpd\": {\r\n                \"option\": \"OPEN\",\r\n                \"returnShipmentServiceId\": 505,\r\n                \"returnShipmentPayer\": \"SENDER\"\r\n            }\r\n        },\r\n        \"saturdayDelivery\": true,\r\n        \"autoAdjustPickupDate\": true\r\n    },\r\n    \"content\": {\r\n        \"parcelsCount\": 1,\r\n        \"totalWeight\": 0.6,\r\n        \"contents\": \"MOBILE PHONE\",\r\n        \"package\": \"BOX\"\r\n    },\r\n    \"payment\": {\r\n        \"courierServicePayer\": \"RECIPIENT\",\r\n        \"declaredValuePayer\": \"RECIPIENT\"\r\n    },\r\n    \"sender\": {\r\n        \"phone1\": {\r\n            \"number\": \"0888112233\"\r\n        },\r\n        \"contactName\": \"IVAN PETROV\",\r\n        \"email\": \"ivan@petrov.bg\"\r\n    },\r\n    \"recipient\": {\r\n        \"phone1\": {\r\n            \"number\": \"0899445566\"\r\n        },\r\n        \"clientName\": \"VASIL GEORGIEV\",\r\n        \"email\": \"vasil@georgiev.bg\",\r\n        \"privatePerson\": true,\r\n        \"address\": {\r\n            \"countryId\": 100,\r\n            \"siteType\": \"gr.\",\r\n            \"siteName\": \"SOFIA\",\r\n            \"addressNote\": \"ul. USTA GENCHO, No.1A, bl.301, ent.2, fl.3, ap.4\"\r\n        }\r\n    },\r\n    \"ref1\": \"ORDER 123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/shipment",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"shipment"
+							]
+						},
+						"description": "That kind of shipment will be not processed automatically and there are probabilities for mistakes and delay of the delivery."
+					},
+					"response": []
+				},
+				{
+					"name": "7c - The whole address is placed in the 'addressNote' field",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"service\": {\r\n        \"serviceId\": 505,\r\n        \"additionalServices\": {\r\n            \"cod\": {\r\n                \"amount\": 100.0,\r\n                \"processingType\": \"CASH\"\r\n            },\r\n            \"declaredValue\": {\r\n                \"amount\": 100.0,\r\n                \"fragile\": true,\r\n                \"ignoreIfNotApplicable\": true\r\n            },\r\n            \"obpd\": {\r\n                \"option\": \"OPEN\",\r\n                \"returnShipmentServiceId\": 505,\r\n                \"returnShipmentPayer\": \"SENDER\"\r\n            }\r\n        },\r\n        \"saturdayDelivery\": true,\r\n        \"autoAdjustPickupDate\": true\r\n    },\r\n    \"content\": {\r\n        \"parcelsCount\": 1,\r\n        \"totalWeight\": 0.6,\r\n        \"contents\": \"MOBILE PHONE\",\r\n        \"package\": \"BOX\"\r\n    },\r\n    \"payment\": {\r\n        \"courierServicePayer\": \"RECIPIENT\",\r\n        \"declaredValuePayer\": \"RECIPIENT\"\r\n    },\r\n    \"sender\": {\r\n        \"phone1\": {\r\n            \"number\": \"0888112233\"\r\n        },\r\n        \"contactName\": \"IVAN PETROV\",\r\n        \"email\": \"ivan@petrov.bg\"\r\n    },\r\n    \"recipient\": {\r\n        \"phone1\": {\r\n            \"number\": \"0899445566\"\r\n        },\r\n        \"clientName\": \"VASIL GEORGIEV\",\r\n        \"email\": \"vasil@georgiev.bg\",\r\n        \"privatePerson\": true,\r\n        \"address\": {\r\n            \"countryId\": 100,\r\n            \"siteName\": \"SOFIA\",\r\n            \"postCode\": \"1330\",\r\n            \"addressNote\": \"ul. USTA GENCHO, No.1A, bl.301, ent.2, fl.3, ap.4\"\r\n        }\r\n    },\r\n    \"ref1\": \"ORDER 123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/shipment",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"shipment"
+							]
+						},
+						"description": "That kind of shipment will be not processed automatically and there are probabilities for mistakes and delay of the delivery."
+					},
+					"response": []
+				},
+				{
+					"name": "8a - GERMANY Example - A foreign address (the addressType property has a value 2)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"service\": {\r\n        \"serviceId\": 306,\r\n        \"saturdayDelivery\": true,\r\n        \"autoAdjustPickupDate\": true\r\n    },\r\n    \"content\": {\r\n        \"parcelsCount\": 1,\r\n        \"totalWeight\": 0.6,\r\n        \"contents\": \"MOBILE PHONE\",\r\n        \"package\": \"BOX\",\r\n        \"parcels\": [\r\n            {\r\n                \"seqNo\": 1,\r\n                \"size\": {\r\n                    \"width\": 25,\r\n                    \"depth\": 20,\r\n                    \"height\": 35\r\n                },\r\n                \"weight\": 8\r\n            }\r\n        ]\r\n    },\r\n    \"payment\": {\r\n        \"courierServicePayer\": \"SENDER\"\r\n    },\r\n    \"sender\": {\r\n        \"phone1\": {\r\n            \"number\": \"0888112233\"\r\n        },\r\n        \"contactName\": \"IVAN PETROV\",\r\n        \"email\": \"ivan@petrov.bg\"\r\n    },\r\n    \"recipient\": {\r\n        \"phone1\": {\r\n            \"number\": \"0899445566\"\r\n        },\r\n        \"clientName\": \"VASIL GEORGIEV\",\r\n        \"email\": \"vasil@georgiev.bg\",\r\n        \"privatePerson\": true,\r\n        \"address\": {\r\n            \"countryId\": 276,\r\n            \"siteName\": \"MUNICH\",\r\n            \"postCode\": \"80001\",\r\n            \"addressLine1\": \"Complex name, Street name, No.1\",\r\n            \"addressLine2\": \"Additional address note\"\r\n        }\r\n    },\r\n    \"ref1\": \"ORDER 123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/shipment",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"shipment"
+							]
+						},
+						"description": "Here `\"countryId\": 276` is the country code of Germany. Also we are using `\"serviceId\": 306` because it is one of the services which are allowed from Bulgaria to Germany. Also, for service 306, `\"parcels\":` data for describing package size is a required data."
+					},
+					"response": []
+				},
+				{
+					"name": "8b - GREECE Example - A foreign address (the addressType property has a value 2)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"service\": {\r\n        \"serviceId\": 202,\r\n        \"saturdayDelivery\": true,\r\n        \"autoAdjustPickupDate\": true\r\n    },\r\n    \"content\": {\r\n        \"parcelsCount\": 1,\r\n        \"totalWeight\": 0.6,\r\n        \"contents\": \"MOBILE PHONE\",\r\n        \"package\": \"BOX\"\r\n    },\r\n    \"payment\": {\r\n        \"courierServicePayer\": \"SENDER\"\r\n    },\r\n    \"sender\": {\r\n        \"phone1\": {\r\n            \"number\": \"0888112233\"\r\n        },\r\n        \"contactName\": \"IVAN PETROV\",\r\n        \"email\": \"ivan@petrov.bg\"\r\n    },\r\n    \"recipient\": {\r\n        \"phone1\": {\r\n            \"number\": \"0899445566\"\r\n        },\r\n        \"clientName\": \"VASIL GEORGIEV\",\r\n        \"email\": \"vasil@georgiev.bg\",\r\n        \"privatePerson\": true,\r\n        \"address\": {\r\n            \"countryId\": 300,\r\n            \"siteName\": \"THESSALONIKI\",\r\n            \"postCode\": \"54629\",\r\n            \"addressLine1\": \"28 Monastiriou str\",\r\n            \"addressLine2\": \"Bus station\"\r\n        }\r\n    },\r\n    \"ref1\": \"ORDER 123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/shipment",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"shipment"
+							]
+						},
+						"description": "Here `\"countryId\": 300` is the country code of Greece. Also we are using `\"serviceId\": 202` because it is one of the services which are allowed from Bulgaria to Greece."
+					},
+					"response": []
+				},
+				{
+					"name": "8c - FRANCE Example - A foreign address (the addressType property has a value 2)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": {{API_USERNAME}},\r\n    \"password\": {{API_PASSWORD}},\r\n    \"language\": \"EN\",\r\n    \"service\": {\r\n        \"serviceId\": 306,\r\n        \"saturdayDelivery\": true,\r\n        \"autoAdjustPickupDate\": true\r\n    },\r\n    \"content\": {\r\n        \"parcelsCount\": 1,\r\n        \"totalWeight\": 0.6,\r\n        \"contents\": \"MOBILE PHONE\",\r\n        \"package\": \"BOX\",\r\n        \"parcels\":[\r\n            {\r\n                \"seqNo\": 1,\r\n                \"size\":{\r\n                    \"width\":30,\r\n                    \"depth\":20,\r\n                    \"height\":10\r\n                },\r\n                \"weight\": 10.0\r\n            }\r\n        ]\r\n    },\r\n    \"payment\": {\r\n        \"courierServicePayer\": \"SENDER\"\r\n    },\r\n    \"sender\": {\r\n        \"phone1\": {\r\n            \"number\": \"0888112233\"\r\n        },\r\n        \"contactName\": \"IVAN PETROV\",\r\n        \"email\": \"ivan@petrov.bg\"\r\n    },\r\n    \"recipient\": {\r\n        \"phone1\": {\r\n            \"number\": \"0899445566\"\r\n        },\r\n        \"clientName\": \"VASIL GEORGIEV\",\r\n        \"email\": \"vasil@georgiev.bg\",\r\n        \"privatePerson\": true,\r\n        \"address\" : {\r\n            \"countryId\" : 250,\r\n            \"siteName\" : \"PARIS\",\r\n            \"postCode\" : \"75016\",  \r\n            \"addressLine1\" : \"24 Rue du Commandant Guilbaud\",\r\n            \"addressLine2\" : \"Parc des Princes Stadium\"\r\n        }    \r\n    },\r\n    \"ref1\": \"ORDER 123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASEURL}}/shipment",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"shipment"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "##### Explanation\nThe examples for address are presented for giving basic visualization on how the address can be structured based on the different scenarios.  \nWe are using the request for generating a shipment [CreateShipmentRequest](https://api.speedy.bg/web-api.html#href-create-shipment-req), to represent the examples in the recipient's address data."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API_USERNAME",
+			"value": "SPEEDY_API_USERNAME"
+		},
+		{
+			"key": "API_PASSWORD",
+			"value": "SPEEDY_API_PASSWORD"
+		},
+		{
+			"key": "BASEURL",
+			"value": "https://api.speedy.bg/v1"
+		}
+	]
+}

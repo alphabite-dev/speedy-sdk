@@ -1,0 +1,34 @@
+# Test files
+tests/
+*.test.ts
+*.test.js
+vitest.config.ts
+.env
+.env.example
+
+# Development files
+.vscode/
+.idea/
+*.log
+*.tmp
+.DS_Store
+
+# Documentation that shouldn't be in npm package
+TESTING_PLAN.md
+TEST_SUMMARY.md
+Speedy_API_examples_Postman_collection_v_1.3.0.json
+view-source_*.html
+docs/
+scripts/
+
+# Example directory
+econt-exmaple/
+
+# Source files (only dist/ should be included)
+src/
+tsconfig.json
+
+# Git files
+.git/
+.gitignore
+.gitattributes

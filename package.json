@@ -1,0 +1,62 @@
+{
+  "name": "@alphabite/speedy-sdk",
+  "version": "1.0.0",
+  "description": "Official TypeScript SDK for Speedy shipping API - the leading Bulgarian courier service",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:integration": "vitest run tests/integration",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run typecheck && npm run build"
+  },
+  "keywords": [
+    "speedy",
+    "shipping",
+    "courier",
+    "bulgaria",
+    "sdk",
+    "api",
+    "typescript",
+    "delivery",
+    "logistics",
+    "tracking",
+    "shipment"
+  ],
+  "author": "Alphabite",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alphabite-org/speedy-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alphabite-org/speedy-sdk/issues"
+  },
+  "homepage": "https://github.com/alphabite-org/speedy-sdk#readme",
+  "dependencies": {
+    "axios": "^1.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "@vitest/ui": "^4.0.3",
+    "dotenv": "^17.2.3",
+    "typescript": "^5.3.3",
+    "vitest": "^4.0.3"
+  }
+}
