@@ -41,23 +41,6 @@ describe("Client Initialization and Configuration Tests", () => {
     }).toThrow("Password is required");
   });
 
-  it("should initialize with cache configuration", () => {
-    const client = new SpeedyClient({
-      username: process.env.SPEEDY_USERNAME!,
-      password: process.env.SPEEDY_PASSWORD!,
-      environment: "production",
-      cache: {
-        enabled: true,
-        directory: ".cache/speedy-test",
-        ttl: 3600,
-      },
-    });
-
-    expect(client).toBeDefined();
-    const status = client.getCacheStatus();
-    expect(status).toBeDefined();
-  });
-
   it("should handle timeout configuration", () => {
     const client = new SpeedyClient({
       username: process.env.SPEEDY_USERNAME!,

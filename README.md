@@ -1,18 +1,22 @@
 # @alphabite/speedy-sdk
 
-Official TypeScript SDK for [Speedy](https://www.speedy.bg) shipping API - Bulgaria's leading courier service.
+Unofficial TypeScript SDK for [Speedy](https://www.speedy.bg) shipping API - Bulgaria's leading courier service.
 
 [![npm version](https://img.shields.io/npm/v/@alphabite/speedy-sdk.svg)](https://www.npmjs.com/package/@alphabite/speedy-sdk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)](https://www.typescriptlang.org/)
 
+> Independent community implementation. Not officially affiliated with or endorsed by Speedy AD.
+
 ## Features
 
-✅ **100% Test Coverage** - All 69 integration tests passing  
-✅ **Full TypeScript Support** - Complete type definitions  
-✅ **Promise-based API** - Modern async/await syntax  
-✅ **Comprehensive Error Handling** - Detailed error types  
-✅ **Production Ready** - Fully validated with real Speedy API
+- **Core API Coverage** - Shipments, tracking, printing, address lookup, offices, and rate calculation
+- **100% Type Safe** - Full TypeScript support with complete type definitions
+- **Dual Format** - Ships both CommonJS and ES Modules
+- **Promise-based API** - Modern async/await syntax
+- **Custom Error Types** - Specific error classes for each failure mode
+- **Required Filters** - Listing endpoints guarded against huge response dumps
+- **Well Tested** - Comprehensive integration tests against the live Speedy API
 
 ## Installation
 
@@ -118,14 +122,35 @@ const speedy = new SpeedyClient({
 
   // Optional: Maximum retry attempts for failed requests (default: 3)
   maxRetries: 3,
-
-  // Optional: Enable caching for nomenclature data
-  cache: {
-    enabled: true,
-    directory: ".cache/speedy",
-    ttl: 3600, // Time to live in seconds
-  },
 });
+```
+
+## ⚠️ Important: Required Filters
+
+To prevent timeout errors and huge response payloads, certain listing methods require at least one filter:
+
+### `address.findSites()` — at least one of `countryId`, `name`, or `postCode`
+
+```typescript
+// ✅ Correct
+const result = await speedy.address.findSites({ countryId: 100 });
+const result = await speedy.address.findSites({ countryId: 100, name: "SOFIA" });
+const result = await speedy.address.findSites({ countryId: 100, postCode: "1000" });
+
+// ❌ Wrong - will throw
+const result = await speedy.address.findSites({}); // Error!
+```
+
+### `offices.find()` — at least one of `countryId`, `cityId`, `siteId`, or `name`
+
+```typescript
+// ✅ Correct
+const result = await speedy.offices.find({ countryId: 100 });
+const result = await speedy.offices.find({ siteId: 68134 });
+const result = await speedy.offices.find({ name: "SOFIA" });
+
+// ❌ Wrong - will throw
+const result = await speedy.offices.find({}); // Error!
 ```
 
 ## API Reference
@@ -982,7 +1007,8 @@ try {
   } else if (error instanceof SpeedyAPIError) {
     console.error("API error:", error.message);
     console.error("Status:", error.statusCode);
-    console.error("Details:", error.details);
+    console.error("Response:", error.response);
+    console.error("Request ID:", error.requestId);
   } else {
     console.error("Unknown error:", error);
   }
@@ -1151,7 +1177,6 @@ For production applications, store credentials in environment variables:
 # .env file
 SPEEDY_USERNAME=your_username
 SPEEDY_PASSWORD=your_password
-SPEEDY_BASE_URL=https://api.speedy.bg/v1
 ```
 
 ```typescript
@@ -1212,30 +1237,131 @@ try {
 }
 ```
 
-### Caching
+### Caching Strategies (User-Implemented)
 
-For frequently accessed nomenclature data (offices, cities, etc.), enable caching:
+The SDK doesn't include built-in caching to keep it lightweight and flexible. Here are recommended caching patterns you can implement for frequently accessed nomenclature data (offices, cities, etc.):
+
+#### Option 1: Redis Cache
 
 ```typescript
+import Redis from "ioredis";
+
+const redis = new Redis();
 const speedy = new SpeedyClient({
-  username: "...",
-  password: "...",
-  cache: {
-    enabled: true,
-    directory: ".cache/speedy",
-    ttl: 86400, // Cache for 24 hours
-  },
+  username: process.env.SPEEDY_USERNAME!,
+  password: process.env.SPEEDY_PASSWORD!,
 });
 
-// Export all nomenclature data to cache
-await speedy.exportAllData();
+async function getCitiesWithCache(countryId: number) {
+  const key = `speedy:cities:${countryId}`;
 
-// Check cache status
-const status = speedy.getCacheStatus();
-console.log(status);
+  // Check cache
+  const cached = await redis.get(key);
+  if (cached) return JSON.parse(cached);
 
-// Clear cache when needed
-speedy.clearCache();
+  // Fetch from API
+  const cities = await speedy.address.findSites({ countryId });
+
+  // Store in cache (24 hour TTL)
+  await redis.set(key, JSON.stringify(cities), "EX", 86400);
+
+  return cities;
+}
+```
+
+#### Option 2: File System Cache
+
+```typescript
+import * as fs from "fs";
+import * as path from "path";
+
+const CACHE_DIR = "./cache";
+const TTL = 24 * 60 * 60 * 1000; // 24 hours
+
+async function getCitiesWithFileCache(countryId: number) {
+  const file = path.join(CACHE_DIR, `cities-${countryId}.json`);
+
+  // Check if cache exists and is fresh
+  if (fs.existsSync(file)) {
+    const stats = fs.statSync(file);
+    const age = Date.now() - stats.mtime.getTime();
+
+    if (age < TTL) {
+      return JSON.parse(fs.readFileSync(file, "utf-8"));
+    }
+  }
+
+  // Fetch from API
+  const cities = await speedy.address.findSites({ countryId });
+
+  // Save to cache
+  if (!fs.existsSync(CACHE_DIR)) {
+    fs.mkdirSync(CACHE_DIR, { recursive: true });
+  }
+  fs.writeFileSync(file, JSON.stringify(cities, null, 2));
+
+  return cities;
+}
+```
+
+#### Option 3: In-Memory Cache
+
+```typescript
+const cache = new Map<string, { data: any; timestamp: number }>();
+const TTL = 24 * 60 * 60 * 1000;
+
+async function getCitiesWithMemoryCache(countryId: number) {
+  const key = `cities:${countryId}`;
+  const cached = cache.get(key);
+
+  // Check if cache is fresh
+  if (cached && Date.now() - cached.timestamp < TTL) {
+    return cached.data;
+  }
+
+  // Fetch from API
+  const cities = await speedy.address.findSites({ countryId });
+
+  // Store in cache
+  cache.set(key, { data: cities, timestamp: Date.now() });
+
+  return cities;
+}
+```
+
+#### Option 4: Database Cache
+
+```typescript
+// Using your ORM (Prisma, TypeORM, etc.)
+async function getCitiesWithDbCache(countryId: number) {
+  // Check database
+  let cacheEntry = await db.cache.findUnique({
+    where: { key: `cities:${countryId}` },
+  });
+
+  if (cacheEntry && Date.now() - cacheEntry.timestamp < TTL) {
+    return JSON.parse(cacheEntry.data);
+  }
+
+  // Fetch from API
+  const cities = await speedy.address.findSites({ countryId });
+
+  // Store in database
+  await db.cache.upsert({
+    where: { key: `cities:${countryId}` },
+    create: {
+      key: `cities:${countryId}`,
+      data: JSON.stringify(cities),
+      timestamp: Date.now(),
+    },
+    update: {
+      data: JSON.stringify(cities),
+      timestamp: Date.now(),
+    },
+  });
+
+  return cities;
+}
 ```
 
 ### Timeout Configuration
@@ -1274,7 +1400,7 @@ npm run test:ui
 
 ## Requirements
 
-- Node.js >= 16
+- Node.js >= 14
 - TypeScript >= 5.0 (for TypeScript projects)
 
 ---
@@ -1316,7 +1442,7 @@ The following package types are supported:
 
 For issues, questions, or contributions:
 
-- **GitHub Issues**: [https://github.com/alphabite-org/speedy-sdk/issues](https://github.com/alphabite-org/speedy-sdk/issues)
+- **GitHub Issues**: [https://github.com/alphabite-dev/speedy-sdk/issues](https://github.com/alphabite-dev/speedy-sdk/issues)
 - **Speedy Support**: [https://www.speedy.bg/bg/kontakti](https://www.speedy.bg/bg/kontakti)
 
 ---
@@ -1341,12 +1467,24 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Changelog
 
+### v1.1.0 (Unreleased)
+
+⚠️ **Breaking Changes**
+
+- **Removed built-in caching.** The `cache` config option, `exportAllData()`, `getCacheStatus()`, and `clearCache()` have been removed. See [Caching Strategies](#caching-strategies-user-implemented) for recommended user-implemented patterns.
+- **Required filters on listing endpoints.** `offices.find()` now requires at least one of `countryId`, `cityId`, `siteId`, or `name`. `address.findSites()` now requires at least one of `countryId`, `name`, or `postCode`. Calls without filters previously returned massive payloads.
+
+🆕 **Other Changes**
+
+- Split into a monorepo: `@alphabite/speedy-sdk` (the SDK) and `@alphabite/speedy-types` (standalone types).
+- Switched build from `tsc` to `tsup`; now publishes both CommonJS (`.js`) and ES Modules (`.mjs`) with type definitions.
+
 ### v1.0.0 (2025-10-27)
 
 - 🎉 Initial release
 - ✅ Complete Speedy API v1 support
 - ✅ Full TypeScript support
-- ✅ 100% test coverage (69/69 tests passing)
+- ✅ Comprehensive integration tests
 - ✅ Support for all shipment types (domestic, international)
 - ✅ Complete address lookup services
 - ✅ Calculation services
@@ -1358,7 +1496,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Credits
 
-Developed by [Alphabite](https://github.com/alphabite-org)
+Developed by [Alphabite](https://github.com/alphabite-dev)
 
 **Not officially affiliated with Speedy AD.** This is an independent SDK implementation.
 

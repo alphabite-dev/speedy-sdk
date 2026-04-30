@@ -9,7 +9,7 @@ import {
   GetStreetsResponse,
   GetQuartersRequest,
   GetQuartersResponse,
-} from "../types/address";
+} from "@alphabite/speedy-types";
 
 /**
  * Address resource - handles address validation and lookup operations
@@ -23,9 +23,15 @@ export class AddressService extends BaseResource {
   }
 
   /**
-   * Find sites (cities) with optional filters
+   * Find sites (cities) with filters
+   * At least one filter is required to prevent huge responses
    */
-  async findSites(params?: GetCitiesRequest): Promise<GetCitiesResponse> {
+  async findSites(params: GetCitiesRequest): Promise<GetCitiesResponse> {
+    if (!params || (!params.countryId && !params.name && !params.postCode)) {
+      throw new Error(
+        "At least one filter (countryId, name, or postCode) is required to fetch cities"
+      );
+    }
     const response = await this.http.post<GetCitiesResponse>(ENDPOINTS.findSite, params);
     // Add backwards compatibility - map sites to cities
     if (response.sites && !response.cities) {

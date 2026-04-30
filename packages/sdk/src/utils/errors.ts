@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { SpeedyApiError } from "../types/error";
+import { SpeedyApiError } from "@alphabite/speedy-types";
 
 /**
  * Base error class for all Speedy SDK errors

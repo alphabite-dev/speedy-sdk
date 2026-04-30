@@ -2,19 +2,12 @@
  * Common types used across the SDK
  */
 
-export interface CacheConfig {
-  enabled: boolean;
-  directory: string;
-  ttl?: number;
-}
-
 export interface SpeedyConfig {
   username: string;
   password: string;
   environment?: "production" | "sandbox";
   timeout?: number;
   maxRetries?: number;
-  cache?: CacheConfig;
 }
 
 export interface ApiResponse<T> {

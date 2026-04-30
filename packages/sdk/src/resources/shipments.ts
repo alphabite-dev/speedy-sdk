@@ -8,7 +8,7 @@ import {
   CalculateShippingResponse,
   CancelShipmentRequest,
   CancelShipmentResponse,
-} from "../types/shipments";
+} from "@alphabite/speedy-types";
 
 /**
  * Shipments resource - handles shipment-related operations

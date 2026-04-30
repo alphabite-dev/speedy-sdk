@@ -1,6 +1,6 @@
 import { BaseResource } from "./base";
 import { ENDPOINTS } from "../constants";
-import { TrackShipmentResponse, GetTrackingHistoryResponse } from "../types/tracking";
+import { TrackShipmentResponse, GetTrackingHistoryResponse } from "@alphabite/speedy-types";
 
 /**
  * Tracking resource - handles shipment tracking operations
