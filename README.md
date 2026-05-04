@@ -35,63 +35,63 @@ pnpm add @alphabite/speedy-sdk
 ## Quick Start
 
 ```typescript
-import { SpeedyClient } from "@alphabite/speedy-sdk";
+import { SpeedyClient } from '@alphabite/speedy-sdk';
 
 // Initialize the client
 const speedy = new SpeedyClient({
-  username: "your_username",
-  password: "your_password",
-  environment: "production",
+	username: 'your_username',
+	password: 'your_password',
+	environment: 'production',
 });
 
 // Calculate shipping cost
 const calculation = await speedy.calculation.calculate({
-  recipient: {
-    privatePerson: true,
-    addressLocation: { siteId: 68134 }, // Sofia
-  },
-  service: {
-    serviceIds: [505],
-  },
-  content: {
-    parcelsCount: 1,
-    totalWeight: 0.6,
-  },
-  payment: {
-    courierServicePayer: "SENDER",
-  },
+	recipient: {
+		privatePerson: true,
+		addressLocation: { siteId: 68134 }, // Sofia
+	},
+	service: {
+		serviceIds: [505],
+	},
+	content: {
+		parcelsCount: 1,
+		totalWeight: 0.6,
+	},
+	payment: {
+		courierServicePayer: 'SENDER',
+	},
 });
 
 console.log(`Price: ${calculation.calculations[0].price.amount} BGN`);
 
 // Create a shipment
 const shipment = await speedy.shipments.create({
-  service: {
-    serviceId: 505,
-    autoAdjustPickupDate: true,
-  },
-  content: {
-    parcelsCount: 1,
-    totalWeight: 0.6,
-    contents: "Mobile Phone",
-    package: "BOX",
-  },
-  payment: {
-    courierServicePayer: "SENDER",
-  },
-  sender: {
-    phone1: { number: "0888112233" },
-    contactName: "Ivan Petrov",
-    email: "ivan@example.com",
-  },
-  recipient: {
-    phone1: { number: "0899445566" },
-    clientName: "Vasil Georgiev",
-    email: "vasil@example.com",
-    privatePerson: true,
-    pickupOfficeId: 14,
-  },
-  ref1: "ORDER-12345",
+	service: {
+		serviceId: 505,
+		autoAdjustPickupDate: true,
+	},
+	content: {
+		parcelsCount: 1,
+		totalWeight: 0.6,
+		contents: 'Mobile Phone',
+		package: 'BOX',
+	},
+	payment: {
+		courierServicePayer: 'SENDER',
+	},
+	sender: {
+		phone1: { number: '0888112233' },
+		contactName: 'Ivan Petrov',
+		email: 'ivan@example.com',
+	},
+	recipient: {
+		phone1: { number: '0899445566' },
+		clientName: 'Vasil Georgiev',
+		email: 'vasil@example.com',
+		privatePerson: true,
+		pickupOfficeId: 14,
+	},
+	ref1: 'ORDER-12345',
 });
 
 console.log(`Shipment ID: ${shipment.id}`);
@@ -103,9 +103,9 @@ console.log(`Shipment ID: ${shipment.id}`);
 
 ```typescript
 const speedy = new SpeedyClient({
-  username: "your_username",
-  password: "your_password",
-  environment: "production", // 'production' or 'sandbox'
+	username: 'your_username',
+	password: 'your_password',
+	environment: 'production', // 'production' or 'sandbox'
 });
 ```
 
@@ -113,15 +113,15 @@ const speedy = new SpeedyClient({
 
 ```typescript
 const speedy = new SpeedyClient({
-  username: "your_username",
-  password: "your_password",
-  environment: "production",
+	username: 'your_username',
+	password: 'your_password',
+	environment: 'production',
 
-  // Optional: Request timeout in milliseconds (default: 30000)
-  timeout: 30000,
+	// Optional: Request timeout in milliseconds (default: 30000)
+	timeout: 30000,
 
-  // Optional: Maximum retry attempts for failed requests (default: 3)
-  maxRetries: 3,
+	// Optional: Maximum retry attempts for failed requests (default: 3)
+	maxRetries: 3,
 });
 ```
 
@@ -134,8 +134,14 @@ To prevent timeout errors and huge response payloads, certain listing methods re
 ```typescript
 // ✅ Correct
 const result = await speedy.address.findSites({ countryId: 100 });
-const result = await speedy.address.findSites({ countryId: 100, name: "SOFIA" });
-const result = await speedy.address.findSites({ countryId: 100, postCode: "1000" });
+const result = await speedy.address.findSites({
+	countryId: 100,
+	name: 'SOFIA',
+});
+const result = await speedy.address.findSites({
+	countryId: 100,
+	postCode: '1000',
+});
 
 // ❌ Wrong - will throw
 const result = await speedy.address.findSites({}); // Error!
@@ -147,7 +153,7 @@ const result = await speedy.address.findSites({}); // Error!
 // ✅ Correct
 const result = await speedy.offices.find({ countryId: 100 });
 const result = await speedy.offices.find({ siteId: 68134 });
-const result = await speedy.offices.find({ name: "SOFIA" });
+const result = await speedy.offices.find({ name: 'SOFIA' });
 
 // ❌ Wrong - will throw
 const result = await speedy.offices.find({}); // Error!
@@ -175,16 +181,16 @@ The SDK provides access to the following services:
 ```typescript
 // Find cities by name
 const result = await speedy.address.findSites({
-  countryId: 100, // Bulgaria
-  name: "SOFIA",
+	countryId: 100, // Bulgaria
+	name: 'SOFIA',
 });
 
 console.log(result.sites); // or result.cities (backwards compatible)
 
 // Find by postcode
 const result = await speedy.address.findSites({
-  countryId: 100,
-  postCode: "1000",
+	countryId: 100,
+	postCode: '1000',
 });
 ```
 
@@ -193,17 +199,17 @@ const result = await speedy.address.findSites({
 ```typescript
 // Find all offices in Bulgaria
 const result = await speedy.offices.find({
-  countryId: 100,
+	countryId: 100,
 });
 
 // Find offices in a specific city
 const result = await speedy.offices.find({
-  siteId: 68134, // Sofia
+	siteId: 68134, // Sofia
 });
 
 // Find office by partial name
 const result = await speedy.offices.find({
-  name: "SOFIA",
+	name: 'SOFIA',
 });
 ```
 
@@ -211,8 +217,8 @@ const result = await speedy.offices.find({
 
 ```typescript
 const result = await speedy.address.findStreets(
-  68134, // Sofia siteId
-  "VASIL LEVSKI" // Street name (partial match)
+	68134, // Sofia siteId
+	'VASIL LEVSKI', // Street name (partial match)
 );
 
 console.log(result.streets);
@@ -222,8 +228,8 @@ console.log(result.streets);
 
 ```typescript
 const result = await speedy.address.findComplexes(
-  68134, // Sofia siteId
-  "KRASNA" // Complex name (partial match)
+	68134, // Sofia siteId
+	'KRASNA', // Complex name (partial match)
 );
 
 console.log(result.complexes); // or result.quarters (backwards compatible)
@@ -237,30 +243,30 @@ console.log(result.complexes); // or result.quarters (backwards compatible)
 
 ```typescript
 const calculation = await speedy.calculation.calculate({
-  recipient: {
-    privatePerson: true,
-    addressLocation: {
-      siteId: 68134,
-    },
-  },
-  service: {
-    serviceIds: [505, 421], // Can request multiple services
-  },
-  content: {
-    parcelsCount: 1,
-    totalWeight: 0.6,
-  },
-  payment: {
-    courierServicePayer: "SENDER", // 'SENDER' | 'RECIPIENT' | 'THIRD_PARTY'
-  },
+	recipient: {
+		privatePerson: true,
+		addressLocation: {
+			siteId: 68134,
+		},
+	},
+	service: {
+		serviceIds: [505, 421], // Can request multiple services
+	},
+	content: {
+		parcelsCount: 1,
+		totalWeight: 0.6,
+	},
+	payment: {
+		courierServicePayer: 'SENDER', // 'SENDER' | 'RECIPIENT' | 'THIRD_PARTY'
+	},
 });
 
 // Access all calculated prices
 calculation.calculations.forEach((calc) => {
-  console.log(`Service ${calc.serviceId}:`);
-  console.log(`  Price: ${calc.price.amount} ${calc.price.currency}`);
-  console.log(`  Total: ${calc.price.total}`);
-  console.log(`  Delivery: ${calc.deliveryDeadline}`);
+	console.log(`Service ${calc.serviceId}:`);
+	console.log(`  Price: ${calc.price.amount} ${calc.price.currency}`);
+	console.log(`  Total: ${calc.price.total}`);
+	console.log(`  Delivery: ${calc.deliveryDeadline}`);
 });
 ```
 
@@ -268,20 +274,20 @@ calculation.calculations.forEach((calc) => {
 
 ```typescript
 const calculation = await speedy.calculation.calculate({
-  recipient: {
-    privatePerson: true,
-    pickupOfficeId: 77,
-  },
-  service: {
-    serviceIds: [505],
-  },
-  content: {
-    parcelsCount: 1,
-    totalWeight: 0.8,
-  },
-  payment: {
-    courierServicePayer: "RECIPIENT",
-  },
+	recipient: {
+		privatePerson: true,
+		pickupOfficeId: 77,
+	},
+	service: {
+		serviceIds: [505],
+	},
+	content: {
+		parcelsCount: 1,
+		totalWeight: 0.8,
+	},
+	payment: {
+		courierServicePayer: 'RECIPIENT',
+	},
 });
 ```
 
@@ -289,30 +295,30 @@ const calculation = await speedy.calculation.calculate({
 
 ```typescript
 const calculation = await speedy.calculation.calculate({
-  recipient: {
-    privatePerson: true,
-    addressLocation: { siteId: 68134 },
-  },
-  service: {
-    serviceIds: [306], // International service
-  },
-  content: {
-    parcelsCount: 2,
-    totalWeight: 15.5,
-    parcels: [
-      {
-        weight: 8,
-        size: { width: 30, height: 20, depth: 10 },
-      },
-      {
-        weight: 7.5,
-        size: { width: 25, height: 15, depth: 10 },
-      },
-    ],
-  },
-  payment: {
-    courierServicePayer: "SENDER",
-  },
+	recipient: {
+		privatePerson: true,
+		addressLocation: { siteId: 68134 },
+	},
+	service: {
+		serviceIds: [306], // International service
+	},
+	content: {
+		parcelsCount: 2,
+		totalWeight: 15.5,
+		parcels: [
+			{
+				weight: 8,
+				size: { width: 30, height: 20, depth: 10 },
+			},
+			{
+				weight: 7.5,
+				size: { width: 25, height: 15, depth: 10 },
+			},
+		],
+	},
+	payment: {
+		courierServicePayer: 'SENDER',
+	},
 });
 ```
 
@@ -324,42 +330,42 @@ const calculation = await speedy.calculation.calculate({
 
 ```typescript
 const shipment = await speedy.shipments.create({
-  service: {
-    serviceId: 505,
-    autoAdjustPickupDate: true,
-  },
-  content: {
-    parcelsCount: 1,
-    totalWeight: 0.6,
-    contents: "Mobile Phone",
-    package: "BOX",
-  },
-  payment: {
-    courierServicePayer: "RECIPIENT",
-  },
-  sender: {
-    phone1: { number: "0888112233" },
-    contactName: "Ivan Petrov",
-    email: "ivan@example.com",
-  },
-  recipient: {
-    phone1: { number: "0899445566" },
-    clientName: "Vasil Georgiev",
-    email: "vasil@example.com",
-    privatePerson: true,
-    address: {
-      countryId: 100,
-      siteId: 68134,
-      streetId: 3109,
-      streetNo: "1A",
-      complexId: 29,
-      blockNo: "301",
-      entranceNo: "2",
-      floorNo: "3",
-      apartmentNo: "4",
-    },
-  },
-  ref1: "ORDER-12345",
+	service: {
+		serviceId: 505,
+		autoAdjustPickupDate: true,
+	},
+	content: {
+		parcelsCount: 1,
+		totalWeight: 0.6,
+		contents: 'Mobile Phone',
+		package: 'BOX',
+	},
+	payment: {
+		courierServicePayer: 'RECIPIENT',
+	},
+	sender: {
+		phone1: { number: '0888112233' },
+		contactName: 'Ivan Petrov',
+		email: 'ivan@example.com',
+	},
+	recipient: {
+		phone1: { number: '0899445566' },
+		clientName: 'Vasil Georgiev',
+		email: 'vasil@example.com',
+		privatePerson: true,
+		address: {
+			countryId: 100,
+			siteId: 68134,
+			streetId: 3109,
+			streetNo: '1A',
+			complexId: 29,
+			blockNo: '301',
+			entranceNo: '2',
+			floorNo: '3',
+			apartmentNo: '4',
+		},
+	},
+	ref1: 'ORDER-12345',
 });
 ```
 
@@ -367,39 +373,39 @@ const shipment = await speedy.shipments.create({
 
 ```typescript
 const shipment = await speedy.shipments.create({
-  service: {
-    serviceId: 505,
-    autoAdjustPickupDate: true,
-  },
-  content: {
-    parcelsCount: 1,
-    totalWeight: 0.6,
-    contents: "Documents",
-    package: "ENVELOPE",
-  },
-  payment: {
-    courierServicePayer: "SENDER",
-  },
-  sender: {
-    phone1: { number: "0888112233" },
-    contactName: "Ivan Petrov",
-    email: "ivan@example.com",
-  },
-  recipient: {
-    phone1: { number: "0899445566" },
-    clientName: "Vasil Georgiev",
-    email: "vasil@example.com",
-    privatePerson: true,
-    address: {
-      countryId: 100,
-      siteType: "gr.",
-      siteName: "SOFIA",
-      streetType: "ul.",
-      streetName: "VASIL LEVSKI",
-      streetNo: "10",
-    },
-  },
-  ref1: "ORDER-67890",
+	service: {
+		serviceId: 505,
+		autoAdjustPickupDate: true,
+	},
+	content: {
+		parcelsCount: 1,
+		totalWeight: 0.6,
+		contents: 'Documents',
+		package: 'ENVELOPE',
+	},
+	payment: {
+		courierServicePayer: 'SENDER',
+	},
+	sender: {
+		phone1: { number: '0888112233' },
+		contactName: 'Ivan Petrov',
+		email: 'ivan@example.com',
+	},
+	recipient: {
+		phone1: { number: '0899445566' },
+		clientName: 'Vasil Georgiev',
+		email: 'vasil@example.com',
+		privatePerson: true,
+		address: {
+			countryId: 100,
+			siteType: 'gr.',
+			siteName: 'SOFIA',
+			streetType: 'ul.',
+			streetName: 'VASIL LEVSKI',
+			streetNo: '10',
+		},
+	},
+	ref1: 'ORDER-67890',
 });
 ```
 
@@ -407,32 +413,32 @@ const shipment = await speedy.shipments.create({
 
 ```typescript
 const shipment = await speedy.shipments.create({
-  service: {
-    serviceId: 505,
-    autoAdjustPickupDate: true,
-  },
-  content: {
-    parcelsCount: 1,
-    totalWeight: 0.5,
-    contents: "Accessories",
-    package: "BOX",
-  },
-  payment: {
-    courierServicePayer: "RECIPIENT",
-  },
-  sender: {
-    phone1: { number: "0888112233" },
-    contactName: "Ivan Petrov",
-    email: "ivan@example.com",
-  },
-  recipient: {
-    phone1: { number: "0899445566" },
-    clientName: "Vasil Georgiev",
-    email: "vasil@example.com",
-    privatePerson: true,
-    pickupOfficeId: 14, // Recipient picks up from office
-  },
-  ref1: "ORDER-11111",
+	service: {
+		serviceId: 505,
+		autoAdjustPickupDate: true,
+	},
+	content: {
+		parcelsCount: 1,
+		totalWeight: 0.5,
+		contents: 'Accessories',
+		package: 'BOX',
+	},
+	payment: {
+		courierServicePayer: 'RECIPIENT',
+	},
+	sender: {
+		phone1: { number: '0888112233' },
+		contactName: 'Ivan Petrov',
+		email: 'ivan@example.com',
+	},
+	recipient: {
+		phone1: { number: '0899445566' },
+		clientName: 'Vasil Georgiev',
+		email: 'vasil@example.com',
+		privatePerson: true,
+		pickupOfficeId: 14, // Recipient picks up from office
+	},
+	ref1: 'ORDER-11111',
 });
 ```
 
@@ -440,38 +446,38 @@ const shipment = await speedy.shipments.create({
 
 ```typescript
 const shipment = await speedy.shipments.create({
-  service: {
-    serviceId: 505,
-    additionalServices: {
-      cod: {
-        amount: 100.0,
-        processingType: "CASH", // or "BANK_TRANSFER"
-      },
-    },
-    autoAdjustPickupDate: true,
-  },
-  content: {
-    parcelsCount: 1,
-    totalWeight: 1.0,
-    contents: "Electronics",
-    package: "BOX",
-  },
-  payment: {
-    courierServicePayer: "RECIPIENT",
-  },
-  sender: {
-    phone1: { number: "0888112233" },
-    contactName: "Ivan Petrov",
-    email: "ivan@example.com",
-  },
-  recipient: {
-    phone1: { number: "0899445566" },
-    clientName: "Vasil Georgiev",
-    email: "vasil@example.com",
-    privatePerson: true,
-    pickupOfficeId: 14,
-  },
-  ref1: "COD-ORDER-123",
+	service: {
+		serviceId: 505,
+		additionalServices: {
+			cod: {
+				amount: 100.0,
+				processingType: 'CASH', // or "BANK_TRANSFER"
+			},
+		},
+		autoAdjustPickupDate: true,
+	},
+	content: {
+		parcelsCount: 1,
+		totalWeight: 1.0,
+		contents: 'Electronics',
+		package: 'BOX',
+	},
+	payment: {
+		courierServicePayer: 'RECIPIENT',
+	},
+	sender: {
+		phone1: { number: '0888112233' },
+		contactName: 'Ivan Petrov',
+		email: 'ivan@example.com',
+	},
+	recipient: {
+		phone1: { number: '0899445566' },
+		clientName: 'Vasil Georgiev',
+		email: 'vasil@example.com',
+		privatePerson: true,
+		pickupOfficeId: 14,
+	},
+	ref1: 'COD-ORDER-123',
 });
 ```
 
@@ -479,45 +485,45 @@ const shipment = await speedy.shipments.create({
 
 ```typescript
 const shipment = await speedy.shipments.create({
-  service: {
-    serviceId: 505,
-    additionalServices: {
-      declaredValue: {
-        amount: 500.0,
-        fragile: true,
-        ignoreIfNotApplicable: true,
-      },
-    },
-    autoAdjustPickupDate: true,
-  },
-  content: {
-    parcelsCount: 1,
-    totalWeight: 0.8,
-    contents: "Valuable Items",
-    package: "BOX",
-  },
-  payment: {
-    courierServicePayer: "SENDER",
-    declaredValuePayer: "SENDER",
-  },
-  sender: {
-    phone1: { number: "0888112233" },
-    contactName: "Ivan Petrov",
-    email: "ivan@example.com",
-  },
-  recipient: {
-    phone1: { number: "0899445566" },
-    clientName: "Vasil Georgiev",
-    email: "vasil@example.com",
-    privatePerson: true,
-    address: {
-      countryId: 100,
-      siteId: 68134,
-      streetId: 3109,
-      streetNo: "1A",
-    },
-  },
-  ref1: "VALUABLE-ORDER-456",
+	service: {
+		serviceId: 505,
+		additionalServices: {
+			declaredValue: {
+				amount: 500.0,
+				fragile: true,
+				ignoreIfNotApplicable: true,
+			},
+		},
+		autoAdjustPickupDate: true,
+	},
+	content: {
+		parcelsCount: 1,
+		totalWeight: 0.8,
+		contents: 'Valuable Items',
+		package: 'BOX',
+	},
+	payment: {
+		courierServicePayer: 'SENDER',
+		declaredValuePayer: 'SENDER',
+	},
+	sender: {
+		phone1: { number: '0888112233' },
+		contactName: 'Ivan Petrov',
+		email: 'ivan@example.com',
+	},
+	recipient: {
+		phone1: { number: '0899445566' },
+		clientName: 'Vasil Georgiev',
+		email: 'vasil@example.com',
+		privatePerson: true,
+		address: {
+			countryId: 100,
+			siteId: 68134,
+			streetId: 3109,
+			streetNo: '1A',
+		},
+	},
+	ref1: 'VALUABLE-ORDER-456',
 });
 ```
 
@@ -525,39 +531,39 @@ const shipment = await speedy.shipments.create({
 
 ```typescript
 const shipment = await speedy.shipments.create({
-  service: {
-    serviceId: 505,
-    additionalServices: {
-      obpd: {
-        option: "OPEN", // 'OPEN' | 'TEST' | 'RETURN'
-        returnShipmentServiceId: 505,
-        returnShipmentPayer: "SENDER",
-      },
-    },
-    autoAdjustPickupDate: true,
-  },
-  content: {
-    parcelsCount: 1,
-    totalWeight: 0.7,
-    contents: "Clothing",
-    package: "BOX",
-  },
-  payment: {
-    courierServicePayer: "RECIPIENT",
-  },
-  sender: {
-    phone1: { number: "0888112233" },
-    contactName: "Ivan Petrov",
-    email: "ivan@example.com",
-  },
-  recipient: {
-    phone1: { number: "0899445566" },
-    clientName: "Vasil Georgiev",
-    email: "vasil@example.com",
-    privatePerson: true,
-    pickupOfficeId: 14,
-  },
-  ref1: "OBPD-ORDER-789",
+	service: {
+		serviceId: 505,
+		additionalServices: {
+			obpd: {
+				option: 'OPEN', // 'OPEN' | 'TEST' | 'RETURN'
+				returnShipmentServiceId: 505,
+				returnShipmentPayer: 'SENDER',
+			},
+		},
+		autoAdjustPickupDate: true,
+	},
+	content: {
+		parcelsCount: 1,
+		totalWeight: 0.7,
+		contents: 'Clothing',
+		package: 'BOX',
+	},
+	payment: {
+		courierServicePayer: 'RECIPIENT',
+	},
+	sender: {
+		phone1: { number: '0888112233' },
+		contactName: 'Ivan Petrov',
+		email: 'ivan@example.com',
+	},
+	recipient: {
+		phone1: { number: '0899445566' },
+		clientName: 'Vasil Georgiev',
+		email: 'vasil@example.com',
+		privatePerson: true,
+		pickupOfficeId: 14,
+	},
+	ref1: 'OBPD-ORDER-789',
 });
 ```
 
@@ -566,38 +572,38 @@ const shipment = await speedy.shipments.create({
 ```typescript
 // Shipment to Greece
 const shipment = await speedy.shipments.create({
-  service: {
-    serviceId: 202, // International service for Greece
-    autoAdjustPickupDate: true,
-  },
-  content: {
-    parcelsCount: 1,
-    totalWeight: 1.0,
-    contents: "Books",
-    package: "BOX",
-  },
-  payment: {
-    courierServicePayer: "SENDER",
-  },
-  sender: {
-    phone1: { number: "0888112233" },
-    contactName: "Ivan Petrov",
-    email: "ivan@example.com",
-  },
-  recipient: {
-    phone1: { number: "0899445566" },
-    clientName: "Vasil Georgiev",
-    email: "vasil@example.com",
-    privatePerson: true,
-    address: {
-      countryId: 300, // Greece
-      siteName: "THESSALONIKI",
-      postCode: "54629",
-      addressLine1: "28 Monastiriou str",
-      addressLine2: "Additional info",
-    },
-  },
-  ref1: "INT-ORDER-999",
+	service: {
+		serviceId: 202, // International service for Greece
+		autoAdjustPickupDate: true,
+	},
+	content: {
+		parcelsCount: 1,
+		totalWeight: 1.0,
+		contents: 'Books',
+		package: 'BOX',
+	},
+	payment: {
+		courierServicePayer: 'SENDER',
+	},
+	sender: {
+		phone1: { number: '0888112233' },
+		contactName: 'Ivan Petrov',
+		email: 'ivan@example.com',
+	},
+	recipient: {
+		phone1: { number: '0899445566' },
+		clientName: 'Vasil Georgiev',
+		email: 'vasil@example.com',
+		privatePerson: true,
+		address: {
+			countryId: 300, // Greece
+			siteName: 'THESSALONIKI',
+			postCode: '54629',
+			addressLine1: '28 Monastiriou str',
+			addressLine2: 'Additional info',
+		},
+	},
+	ref1: 'INT-ORDER-999',
 });
 ```
 
@@ -606,49 +612,49 @@ const shipment = await speedy.shipments.create({
 ```typescript
 // For some international services, parcel dimensions are required
 const shipment = await speedy.shipments.create({
-  service: {
-    serviceId: 306, // Service to Germany/France
-    autoAdjustPickupDate: true,
-  },
-  content: {
-    parcelsCount: 1,
-    totalWeight: 8.0,
-    contents: "Electronics",
-    package: "BOX",
-    parcels: [
-      {
-        seqNo: 1,
-        weight: 8,
-        size: {
-          width: 30,
-          depth: 20,
-          height: 35,
-        },
-      },
-    ],
-  },
-  payment: {
-    courierServicePayer: "SENDER",
-  },
-  sender: {
-    phone1: { number: "0888112233" },
-    contactName: "Ivan Petrov",
-    email: "ivan@example.com",
-  },
-  recipient: {
-    phone1: { number: "0899445566" },
-    clientName: "Hans Mueller",
-    email: "hans@example.com",
-    privatePerson: true,
-    address: {
-      countryId: 276, // Germany
-      siteName: "MUNICH",
-      postCode: "80001",
-      addressLine1: "Hauptstrasse 123",
-      addressLine2: "Apartment 4B",
-    },
-  },
-  ref1: "DE-ORDER-777",
+	service: {
+		serviceId: 306, // Service to Germany/France
+		autoAdjustPickupDate: true,
+	},
+	content: {
+		parcelsCount: 1,
+		totalWeight: 8.0,
+		contents: 'Electronics',
+		package: 'BOX',
+		parcels: [
+			{
+				seqNo: 1,
+				weight: 8,
+				size: {
+					width: 30,
+					depth: 20,
+					height: 35,
+				},
+			},
+		],
+	},
+	payment: {
+		courierServicePayer: 'SENDER',
+	},
+	sender: {
+		phone1: { number: '0888112233' },
+		contactName: 'Ivan Petrov',
+		email: 'ivan@example.com',
+	},
+	recipient: {
+		phone1: { number: '0899445566' },
+		clientName: 'Hans Mueller',
+		email: 'hans@example.com',
+		privatePerson: true,
+		address: {
+			countryId: 276, // Germany
+			siteName: 'MUNICH',
+			postCode: '80001',
+			addressLine1: 'Hauptstrasse 123',
+			addressLine2: 'Apartment 4B',
+		},
+	},
+	ref1: 'DE-ORDER-777',
 });
 ```
 
@@ -659,28 +665,32 @@ const shipment = await speedy.shipments.create({
 ### Track Single Parcel
 
 ```typescript
-const tracking = await speedy.tracking.track([{ id: "299999990" }]);
+const tracking = await speedy.tracking.track([{ id: '299999990' }]);
 
 if (tracking.parcels) {
-  tracking.parcels.forEach((parcel) => {
-    console.log(`Parcel ${parcel.parcelId}:`);
-    parcel.operations?.forEach((op) => {
-      console.log(`  ${op.date}: ${op.operationDescription}`);
-    });
-  });
+	tracking.parcels.forEach((parcel) => {
+		console.log(`Parcel ${parcel.parcelId}:`);
+		parcel.operations?.forEach((op) => {
+			console.log(`  ${op.date}: ${op.operationDescription}`);
+		});
+	});
 }
 ```
 
 ### Track Multiple Parcels
 
 ```typescript
-const tracking = await speedy.tracking.track([{ id: "299999990" }, { id: "299999991" }, { id: "299999992" }]);
+const tracking = await speedy.tracking.track([
+	{ id: '299999990' },
+	{ id: '299999991' },
+	{ id: '299999992' },
+]);
 ```
 
 ### Track by Reference Number
 
 ```typescript
-const tracking = await speedy.tracking.track([{ ref: "ORDER-12345" }]);
+const tracking = await speedy.tracking.track([{ ref: 'ORDER-12345' }]);
 ```
 
 ### Get Bulk Tracking Data
@@ -698,15 +708,15 @@ const bulkData = await speedy.tracking.getBulkTrackingFiles(0);
 
 ```typescript
 const result = await speedy.print.print({
-  parcels: [{ id: "299999990" }],
-  paperSize: "A6",
-  format: "pdf",
+	parcels: [{ id: '299999990' }],
+	paperSize: 'A6',
+	format: 'pdf',
 });
 
 if (result.data) {
-  // result.data is base64 encoded PDF
-  const pdfBuffer = Buffer.from(result.data, "base64");
-  // Save or display the PDF
+	// result.data is base64 encoded PDF
+	const pdfBuffer = Buffer.from(result.data, 'base64');
+	// Save or display the PDF
 }
 ```
 
@@ -714,9 +724,9 @@ if (result.data) {
 
 ```typescript
 const result = await speedy.print.print({
-  parcels: [{ id: "299999990" }, { id: "299999991" }, { id: "299999992" }],
-  paperSize: "A6",
-  format: "pdf",
+	parcels: [{ id: '299999990' }, { id: '299999991' }, { id: '299999992' }],
+	paperSize: 'A6',
+	format: 'pdf',
 });
 ```
 
@@ -725,23 +735,28 @@ const result = await speedy.print.print({
 ```typescript
 // A4 format
 const a4Label = await speedy.print.print({
-  parcels: [{ id: "299999990" }],
-  paperSize: "A4",
-  format: "pdf",
+	parcels: [{ id: '299999990' }],
+	paperSize: 'A4',
+	format: 'pdf',
 });
 
 // ZPL format (for thermal printers)
 const zplLabel = await speedy.print.print({
-  parcels: [{ id: "299999990" }],
-  paperSize: "A6",
-  format: "zpl",
+	parcels: [{ id: '299999990' }],
+	paperSize: 'A6',
+	format: 'zpl',
 });
 
 // A4 with 4 A6 labels
 const multiLabel = await speedy.print.print({
-  parcels: [{ id: "299999990" }, { id: "299999991" }, { id: "299999992" }, { id: "299999993" }],
-  paperSize: "A4_4xA6",
-  format: "pdf",
+	parcels: [
+		{ id: '299999990' },
+		{ id: '299999991' },
+		{ id: '299999992' },
+		{ id: '299999993' },
+	],
+	paperSize: 'A4_4xA6',
+	format: 'pdf',
 });
 ```
 
@@ -749,16 +764,16 @@ const multiLabel = await speedy.print.print({
 
 ```typescript
 const result = await speedy.print.printExtended({
-  parcels: [{ id: "299999990" }],
-  paperSize: "A6",
-  format: "pdf",
+	parcels: [{ id: '299999990' }],
+	paperSize: 'A6',
+	format: 'pdf',
 });
 ```
 
 ### Get Label Information
 
 ```typescript
-const info = await speedy.print.getLabelInfo([{ id: "299999990" }]);
+const info = await speedy.print.getLabelInfo([{ id: '299999990' }]);
 ```
 
 ---
@@ -768,7 +783,7 @@ const info = await speedy.print.getLabelInfo([{ id: "299999990" }]);
 ### Get Shipment Information
 
 ```typescript
-const info = await speedy.shipments.getInfo(["shipment-id-1", "shipment-id-2"]);
+const info = await speedy.shipments.getInfo(['shipment-id-1', 'shipment-id-2']);
 
 console.log(info.shipments);
 ```
@@ -777,10 +792,13 @@ console.log(info.shipments);
 
 ```typescript
 try {
-  const result = await speedy.shipments.cancel("shipment-id", "Customer requested cancellation");
-  console.log("Shipment cancelled successfully");
+	const result = await speedy.shipments.cancel(
+		'shipment-id',
+		'Customer requested cancellation',
+	);
+	console.log('Shipment cancelled successfully');
 } catch (error) {
-  console.error("Failed to cancel:", error);
+	console.error('Failed to cancel:', error);
 }
 ```
 
@@ -789,135 +807,137 @@ try {
 ## Complete Workflow Example
 
 ```typescript
-import { SpeedyClient } from "@alphabite/speedy-sdk";
+import { SpeedyClient } from '@alphabite/speedy-sdk';
 
 async function processOrder(orderData: any) {
-  const speedy = new SpeedyClient({
-    username: process.env.SPEEDY_USERNAME!,
-    password: process.env.SPEEDY_PASSWORD!,
-    environment: "production",
-  });
+	const speedy = new SpeedyClient({
+		username: process.env.SPEEDY_USERNAME!,
+		password: process.env.SPEEDY_PASSWORD!,
+		environment: 'production',
+	});
 
-  try {
-    // Step 1: Find recipient's city
-    const cities = await speedy.address.findSites({
-      countryId: 100,
-      name: orderData.city,
-    });
+	try {
+		// Step 1: Find recipient's city
+		const cities = await speedy.address.findSites({
+			countryId: 100,
+			name: orderData.city,
+		});
 
-    const city = cities.sites[0];
-    console.log(`Found city: ${city.name} (ID: ${city.id})`);
+		const city = cities.sites[0];
+		console.log(`Found city: ${city.name} (ID: ${city.id})`);
 
-    // Step 2: Find nearest office
-    const offices = await speedy.offices.find({
-      siteId: city.id,
-    });
+		// Step 2: Find nearest office
+		const offices = await speedy.offices.find({
+			siteId: city.id,
+		});
 
-    const nearestOffice = offices.offices[0];
-    console.log(`Nearest office: ${nearestOffice.name}`);
+		const nearestOffice = offices.offices[0];
+		console.log(`Nearest office: ${nearestOffice.name}`);
 
-    // Step 3: Calculate shipping cost
-    const calculation = await speedy.calculation.calculate({
-      recipient: {
-        privatePerson: true,
-        pickupOfficeId: nearestOffice.id,
-      },
-      service: {
-        serviceIds: [505],
-      },
-      content: {
-        parcelsCount: 1,
-        totalWeight: orderData.weight,
-      },
-      payment: {
-        courierServicePayer: "SENDER",
-      },
-    });
+		// Step 3: Calculate shipping cost
+		const calculation = await speedy.calculation.calculate({
+			recipient: {
+				privatePerson: true,
+				pickupOfficeId: nearestOffice.id,
+			},
+			service: {
+				serviceIds: [505],
+			},
+			content: {
+				parcelsCount: 1,
+				totalWeight: orderData.weight,
+			},
+			payment: {
+				courierServicePayer: 'SENDER',
+			},
+		});
 
-    const price = calculation.calculations[0].price.amount;
-    console.log(`Shipping cost: ${price} BGN`);
+		const price = calculation.calculations[0].price.amount;
+		console.log(`Shipping cost: ${price} BGN`);
 
-    // Step 4: Create shipment
-    const shipment = await speedy.shipments.create({
-      service: {
-        serviceId: 505,
-        additionalServices: {
-          cod: {
-            amount: orderData.totalAmount,
-            processingType: "CASH",
-          },
-        },
-        autoAdjustPickupDate: true,
-      },
-      content: {
-        parcelsCount: 1,
-        totalWeight: orderData.weight,
-        contents: orderData.contents,
-        package: "BOX",
-      },
-      payment: {
-        courierServicePayer: "SENDER",
-      },
-      sender: {
-        phone1: { number: process.env.SENDER_PHONE! },
-        contactName: process.env.SENDER_NAME!,
-        email: process.env.SENDER_EMAIL!,
-      },
-      recipient: {
-        phone1: { number: orderData.phone },
-        clientName: orderData.customerName,
-        email: orderData.email,
-        privatePerson: true,
-        pickupOfficeId: nearestOffice.id,
-      },
-      ref1: `ORDER-${orderData.orderId}`,
-    });
+		// Step 4: Create shipment
+		const shipment = await speedy.shipments.create({
+			service: {
+				serviceId: 505,
+				additionalServices: {
+					cod: {
+						amount: orderData.totalAmount,
+						processingType: 'CASH',
+					},
+				},
+				autoAdjustPickupDate: true,
+			},
+			content: {
+				parcelsCount: 1,
+				totalWeight: orderData.weight,
+				contents: orderData.contents,
+				package: 'BOX',
+			},
+			payment: {
+				courierServicePayer: 'SENDER',
+			},
+			sender: {
+				phone1: { number: process.env.SENDER_PHONE! },
+				contactName: process.env.SENDER_NAME!,
+				email: process.env.SENDER_EMAIL!,
+			},
+			recipient: {
+				phone1: { number: orderData.phone },
+				clientName: orderData.customerName,
+				email: orderData.email,
+				privatePerson: true,
+				pickupOfficeId: nearestOffice.id,
+			},
+			ref1: `ORDER-${orderData.orderId}`,
+		});
 
-    console.log(`✅ Shipment created: ${shipment.id}`);
+		console.log(`✅ Shipment created: ${shipment.id}`);
 
-    // Step 5: Print label
-    if (shipment.parcels && shipment.parcels.length > 0) {
-      const label = await speedy.print.print({
-        parcels: [{ id: shipment.parcels[0].id }],
-        paperSize: "A6",
-        format: "pdf",
-      });
+		// Step 5: Print label
+		if (shipment.parcels && shipment.parcels.length > 0) {
+			const label = await speedy.print.print({
+				parcels: [{ id: shipment.parcels[0].id }],
+				paperSize: 'A6',
+				format: 'pdf',
+			});
 
-      if (label.data) {
-        // Save label to file or send to printer
-        const fs = require("fs");
-        const pdfBuffer = Buffer.from(label.data, "base64");
-        fs.writeFileSync(`label-${shipment.id}.pdf`, pdfBuffer);
-        console.log(`✅ Label saved: label-${shipment.id}.pdf`);
-      }
-    }
+			if (label.data) {
+				// Save label to file or send to printer
+				const fs = require('fs');
+				const pdfBuffer = Buffer.from(label.data, 'base64');
+				fs.writeFileSync(`label-${shipment.id}.pdf`, pdfBuffer);
+				console.log(`✅ Label saved: label-${shipment.id}.pdf`);
+			}
+		}
 
-    // Step 6: Track shipment
-    const tracking = await speedy.tracking.track([{ id: shipment.parcels![0].id }]);
+		// Step 6: Track shipment
+		const tracking = await speedy.tracking.track([
+			{ id: shipment.parcels![0].id },
+		]);
 
-    console.log("✅ Tracking info:", tracking.parcels);
+		console.log('✅ Tracking info:', tracking.parcels);
 
-    return {
-      shipmentId: shipment.id,
-      parcelId: shipment.parcels![0].id,
-      cost: price,
-    };
-  } catch (error) {
-    console.error("❌ Error processing order:", error);
-    throw error;
-  }
+		return {
+			shipmentId: shipment.id,
+			parcelId: shipment.parcels![0].id,
+			cost: price,
+		};
+	} catch (error) {
+		console.error('❌ Error processing order:', error);
+		throw error;
+	}
 }
 
 // Usage
 processOrder({
-  orderId: "12345",
-  city: "SOFIA",
-  customerName: "Vasil Georgiev",
-  phone: "0899445566",
-  email: "vasil@example.com",
-  weight: 0.8,
-  contents: "Mobile Phone",
-  totalAmount: 299.99,
+	orderId: '12345',
+	city: 'SOFIA',
+	customerName: 'Vasil Georgiev',
+	phone: '0899445566',
+	email: 'vasil@example.com',
+	weight: 0.8,
+	contents: 'Mobile Phone',
+	totalAmount: 299.99,
 });
 ```
 
@@ -1038,66 +1058,66 @@ Common Speedy service IDs:
 ```typescript
 // When customer completes checkout
 async function createShippingLabel(order) {
-  const speedy = new SpeedyClient({
-    username: process.env.SPEEDY_USERNAME!,
-    password: process.env.SPEEDY_PASSWORD!,
-    environment: "production",
-  });
+	const speedy = new SpeedyClient({
+		username: process.env.SPEEDY_USERNAME!,
+		password: process.env.SPEEDY_PASSWORD!,
+		environment: 'production',
+	});
 
-  // Create shipment with COD
-  const shipment = await speedy.shipments.create({
-    service: {
-      serviceId: 505,
-      additionalServices: {
-        cod: {
-          amount: order.total,
-          processingType: "CASH",
-        },
-      },
-      autoAdjustPickupDate: true,
-    },
-    content: {
-      parcelsCount: 1,
-      totalWeight: order.weight,
-      contents: order.description,
-      package: "BOX",
-    },
-    payment: {
-      courierServicePayer: "RECIPIENT",
-    },
-    sender: {
-      phone1: { number: process.env.SHOP_PHONE! },
-      contactName: process.env.SHOP_CONTACT!,
-      email: process.env.SHOP_EMAIL!,
-    },
-    recipient: {
-      phone1: { number: order.customerPhone },
-      clientName: order.customerName,
-      email: order.customerEmail,
-      privatePerson: true,
-      address: {
-        countryId: 100,
-        siteId: order.cityId,
-        streetName: order.street,
-        streetNo: order.streetNo,
-        addressNote: order.additionalInfo,
-      },
-    },
-    ref1: `ORDER-${order.id}`,
-  });
+	// Create shipment with COD
+	const shipment = await speedy.shipments.create({
+		service: {
+			serviceId: 505,
+			additionalServices: {
+				cod: {
+					amount: order.total,
+					processingType: 'CASH',
+				},
+			},
+			autoAdjustPickupDate: true,
+		},
+		content: {
+			parcelsCount: 1,
+			totalWeight: order.weight,
+			contents: order.description,
+			package: 'BOX',
+		},
+		payment: {
+			courierServicePayer: 'RECIPIENT',
+		},
+		sender: {
+			phone1: { number: process.env.SHOP_PHONE! },
+			contactName: process.env.SHOP_CONTACT!,
+			email: process.env.SHOP_EMAIL!,
+		},
+		recipient: {
+			phone1: { number: order.customerPhone },
+			clientName: order.customerName,
+			email: order.customerEmail,
+			privatePerson: true,
+			address: {
+				countryId: 100,
+				siteId: order.cityId,
+				streetName: order.street,
+				streetNo: order.streetNo,
+				addressNote: order.additionalInfo,
+			},
+		},
+		ref1: `ORDER-${order.id}`,
+	});
 
-  // Print label
-  const label = await speedy.print.print({
-    parcels: [{ id: shipment.parcels![0].id }],
-    paperSize: "A6",
-    format: "pdf",
-  });
+	// Print label
+	const label = await speedy.print.print({
+		parcels: [{ id: shipment.parcels![0].id }],
+		paperSize: 'A6',
+		format: 'pdf',
+	});
 
-  return {
-    shipmentId: shipment.id,
-    parcelId: shipment.parcels![0].id,
-    labelPdf: label.data,
-  };
+	return {
+		shipmentId: shipment.id,
+		parcelId: shipment.parcels![0].id,
+		labelPdf: label.data,
+	};
 }
 ```
 
@@ -1180,15 +1200,15 @@ SPEEDY_PASSWORD=your_password
 ```
 
 ```typescript
-import { SpeedyClient } from "@alphabite/speedy-sdk";
-import dotenv from "dotenv";
+import { SpeedyClient } from '@alphabite/speedy-sdk';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
 const speedy = new SpeedyClient({
-  username: process.env.SPEEDY_USERNAME!,
-  password: process.env.SPEEDY_PASSWORD!,
-  environment: "production",
+	username: process.env.SPEEDY_USERNAME!,
+	password: process.env.SPEEDY_PASSWORD!,
+	environment: 'production',
 });
 ```
 
@@ -1244,63 +1264,63 @@ The SDK doesn't include built-in caching to keep it lightweight and flexible. He
 #### Option 1: Redis Cache
 
 ```typescript
-import Redis from "ioredis";
+import Redis from 'ioredis';
 
 const redis = new Redis();
 const speedy = new SpeedyClient({
-  username: process.env.SPEEDY_USERNAME!,
-  password: process.env.SPEEDY_PASSWORD!,
+	username: process.env.SPEEDY_USERNAME!,
+	password: process.env.SPEEDY_PASSWORD!,
 });
 
 async function getCitiesWithCache(countryId: number) {
-  const key = `speedy:cities:${countryId}`;
+	const key = `speedy:cities:${countryId}`;
 
-  // Check cache
-  const cached = await redis.get(key);
-  if (cached) return JSON.parse(cached);
+	// Check cache
+	const cached = await redis.get(key);
+	if (cached) return JSON.parse(cached);
 
-  // Fetch from API
-  const cities = await speedy.address.findSites({ countryId });
+	// Fetch from API
+	const cities = await speedy.address.findSites({ countryId });
 
-  // Store in cache (24 hour TTL)
-  await redis.set(key, JSON.stringify(cities), "EX", 86400);
+	// Store in cache (24 hour TTL)
+	await redis.set(key, JSON.stringify(cities), 'EX', 86400);
 
-  return cities;
+	return cities;
 }
 ```
 
 #### Option 2: File System Cache
 
 ```typescript
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from 'fs';
+import * as path from 'path';
 
-const CACHE_DIR = "./cache";
+const CACHE_DIR = './cache';
 const TTL = 24 * 60 * 60 * 1000; // 24 hours
 
 async function getCitiesWithFileCache(countryId: number) {
-  const file = path.join(CACHE_DIR, `cities-${countryId}.json`);
+	const file = path.join(CACHE_DIR, `cities-${countryId}.json`);
 
-  // Check if cache exists and is fresh
-  if (fs.existsSync(file)) {
-    const stats = fs.statSync(file);
-    const age = Date.now() - stats.mtime.getTime();
+	// Check if cache exists and is fresh
+	if (fs.existsSync(file)) {
+		const stats = fs.statSync(file);
+		const age = Date.now() - stats.mtime.getTime();
 
-    if (age < TTL) {
-      return JSON.parse(fs.readFileSync(file, "utf-8"));
-    }
-  }
+		if (age < TTL) {
+			return JSON.parse(fs.readFileSync(file, 'utf-8'));
+		}
+	}
 
-  // Fetch from API
-  const cities = await speedy.address.findSites({ countryId });
+	// Fetch from API
+	const cities = await speedy.address.findSites({ countryId });
 
-  // Save to cache
-  if (!fs.existsSync(CACHE_DIR)) {
-    fs.mkdirSync(CACHE_DIR, { recursive: true });
-  }
-  fs.writeFileSync(file, JSON.stringify(cities, null, 2));
+	// Save to cache
+	if (!fs.existsSync(CACHE_DIR)) {
+		fs.mkdirSync(CACHE_DIR, { recursive: true });
+	}
+	fs.writeFileSync(file, JSON.stringify(cities, null, 2));
 
-  return cities;
+	return cities;
 }
 ```
 
@@ -1311,21 +1331,21 @@ const cache = new Map<string, { data: any; timestamp: number }>();
 const TTL = 24 * 60 * 60 * 1000;
 
 async function getCitiesWithMemoryCache(countryId: number) {
-  const key = `cities:${countryId}`;
-  const cached = cache.get(key);
+	const key = `cities:${countryId}`;
+	const cached = cache.get(key);
 
-  // Check if cache is fresh
-  if (cached && Date.now() - cached.timestamp < TTL) {
-    return cached.data;
-  }
+	// Check if cache is fresh
+	if (cached && Date.now() - cached.timestamp < TTL) {
+		return cached.data;
+	}
 
-  // Fetch from API
-  const cities = await speedy.address.findSites({ countryId });
+	// Fetch from API
+	const cities = await speedy.address.findSites({ countryId });
 
-  // Store in cache
-  cache.set(key, { data: cities, timestamp: Date.now() });
+	// Store in cache
+	cache.set(key, { data: cities, timestamp: Date.now() });
 
-  return cities;
+	return cities;
 }
 ```
 
@@ -1334,33 +1354,33 @@ async function getCitiesWithMemoryCache(countryId: number) {
 ```typescript
 // Using your ORM (Prisma, TypeORM, etc.)
 async function getCitiesWithDbCache(countryId: number) {
-  // Check database
-  let cacheEntry = await db.cache.findUnique({
-    where: { key: `cities:${countryId}` },
-  });
+	// Check database
+	let cacheEntry = await db.cache.findUnique({
+		where: { key: `cities:${countryId}` },
+	});
 
-  if (cacheEntry && Date.now() - cacheEntry.timestamp < TTL) {
-    return JSON.parse(cacheEntry.data);
-  }
+	if (cacheEntry && Date.now() - cacheEntry.timestamp < TTL) {
+		return JSON.parse(cacheEntry.data);
+	}
 
-  // Fetch from API
-  const cities = await speedy.address.findSites({ countryId });
+	// Fetch from API
+	const cities = await speedy.address.findSites({ countryId });
 
-  // Store in database
-  await db.cache.upsert({
-    where: { key: `cities:${countryId}` },
-    create: {
-      key: `cities:${countryId}`,
-      data: JSON.stringify(cities),
-      timestamp: Date.now(),
-    },
-    update: {
-      data: JSON.stringify(cities),
-      timestamp: Date.now(),
-    },
-  });
+	// Store in database
+	await db.cache.upsert({
+		where: { key: `cities:${countryId}` },
+		create: {
+			key: `cities:${countryId}`,
+			data: JSON.stringify(cities),
+			timestamp: Date.now(),
+		},
+		update: {
+			data: JSON.stringify(cities),
+			timestamp: Date.now(),
+		},
+	});
 
-  return cities;
+	return cities;
 }
 ```
 
@@ -1370,9 +1390,9 @@ For large bulk operations, you may need to increase the timeout:
 
 ```typescript
 const speedy = new SpeedyClient({
-  username: "...",
-  password: "...",
-  timeout: 60000, // 60 seconds for bulk operations
+	username: '...',
+	password: '...',
+	timeout: 60000, // 60 seconds for bulk operations
 });
 ```
 
@@ -1466,6 +1486,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 ## Changelog
+
+### v1.2.0 (2026-05-04)
+
+🆕 **New Features**
+
+- Added `services` resource: `speedy.services.getServices()` to fetch available services for a profile/client.
+- Added types for `/services` endpoint (`GetServicesRequest`, `GetServicesResponse`).
 
 ### v1.1.0 (Unreleased)
 
