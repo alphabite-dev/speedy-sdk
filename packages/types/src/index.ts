@@ -9,3 +9,4 @@ export * from './tracking';
 export * from './offices';
 export * from './address';
 export * from './services';
+export * from './location';

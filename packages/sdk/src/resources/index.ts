@@ -10,3 +10,4 @@ export * from './address';
 export * from './print';
 export * from './calculation';
 export * from './services';
+export * from './location';

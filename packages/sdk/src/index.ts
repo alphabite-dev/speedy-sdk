@@ -26,6 +26,7 @@ export {
   AddressService,
   PrintService,
   CalculationService,
+  Location,
 } from "./resources";
 
 // Constants

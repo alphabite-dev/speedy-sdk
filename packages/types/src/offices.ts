@@ -49,9 +49,13 @@ export interface WorkingHours {
 export interface ListOfficesRequest {
   cityId?: number;
   siteId?: number;
+  siteName?: string;
   name?: string;
   type?: OfficeType;
   countryId?: number;
+  limit?: number;
+  language?: "EN" | "BG";
+  clientSystemId?: number;
 }
 
 export interface ListOfficesResponse {

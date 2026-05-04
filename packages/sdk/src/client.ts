@@ -8,6 +8,7 @@ import { AddressService } from "./resources/address";
 import { PrintService } from "./resources/print";
 import { CalculationService } from "./resources/calculation";
 import { Services } from "./resources/services";
+import { Location } from "./resources/location";
 
 /**
  * Main Speedy SDK client
@@ -22,6 +23,7 @@ export class SpeedyClient {
   public readonly print: PrintService;
   public readonly calculation: CalculationService;
   public readonly services: Services;
+  public readonly location: Location;
 
   constructor(config: SpeedyConfig) {
     // Validate credentials
@@ -52,5 +54,6 @@ export class SpeedyClient {
     this.print = new PrintService(this.http);
     this.calculation = new CalculationService(this.http);
     this.services = new Services(this.http);
+    this.location = new Location(this.http);
   }
 }
